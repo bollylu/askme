@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<root>
+  <Questions Name="Ma première liste" Description="Description" Category="school/science">
+    
+    <Question Title="Titre de la question" CorrectAnswer="2" >
+      <Choice Text="Texte du premier choix"></Choice>
+      <Choice Text="Texte du deuxième choix"></Choice>
+      <Choice Text="Texte du troisième choix"></Choice>
+    </Question>
+
+    <Question Title="Titre de la question 2" CorrectAnswer="3" >
+      <Choice Text="Texte du premier choix"></Choice>
+      <Choice Text="Texte du deuxième choix"></Choice>
+      <Choice Text="Texte du troisième choix"></Choice>
+    </Question>
+    
+  </Questions>
+
+  <Questions Name="Ma première liste" Description="Description">
+
+    <Question Title="Titre de la question" CorrectAnswer="2" >
+      <Choice Text="Texte du premier choix"></Choice>
+      <Choice Text="Texte du deuxième choix"></Choice>
+      <Choice Text="Texte du troisième choix"></Choice>
+    </Question>
+
+    <Question Title="Titre de la question 2" CorrectAnswer="3" >
+      <Choice Text="Texte du premier choix"></Choice>
+      <Choice Text="Texte du deuxième choix"></Choice>
+      <Choice Text="Texte du troisième choix"></Choice>
+    </Question>
+
+  </Questions>
+</root>

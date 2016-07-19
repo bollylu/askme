@@ -3,15 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BLTools;
+using System.Xml.Linq;
 
 namespace AskMeLib {
   public class TQuestion {
 
+    public const string XML_ATTRIBUTE_TITLE = "Title";
+    public const string XML_ATTRIBUTE_CORRECT_ANSWER = "CorrectAnswer";
+    public const string XML_ELEMENT_CHOICE = "Choice";
+    public const string XML_ATTRIBUTE_CHOICE_TEXT = "Text";
+
+    #region Propriétés
     public string Title { get; set; }
     public List<string> Choices { get; set; }
     public int CorrectAnswer { get; set; }
     public int CurrentChoice { get; set; }
+    #endregion Propriétés
 
+    #region Constructors
     public TQuestion() {
       Title = "";
       Choices = new List<string>();
@@ -26,6 +36,18 @@ namespace AskMeLib {
         Choices.Add(ChoiceItem);
       }
     }
+
+    public TQuestion(XElement element) {
+      Title = element.SafeReadAttribute<string>(XML_ATTRIBUTE_TITLE, "");
+      CorrectAnswer = element.SafeReadAttribute<int>(XML_ATTRIBUTE_CORRECT_ANSWER, 0);
+      if (element.Elements(XML_ELEMENT_CHOICE).Count()>0 ) {
+        foreach(XElement ChoiceItem in element.Elements(XML_ELEMENT_CHOICE)) {
+          string TempChoice = ChoiceItem.SafeReadAttribute<string>(XML_ATTRIBUTE_CHOICE_TEXT, "");
+          Choices.Add(TempChoice);
+        }
+      }
+    }
+    #endregion Constructors
 
     public bool Ask() {
       bool ReponseOk = false;

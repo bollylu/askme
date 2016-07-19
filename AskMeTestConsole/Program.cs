@@ -9,7 +9,7 @@ using AskMeLib;
 namespace AskMeTestConsole {
   class Program {
     static void Main(string[] args) {
-      int Counter = 0;
+    
 
       const string QHenri = "Quelle est la couleur du cheval blanc d'Henri IV";
       List<string> HenriCheval = new List<string>() {
@@ -35,28 +35,7 @@ namespace AskMeTestConsole {
       MesQuestions.Ask();
     
 
-      //if (Question3.Ask() == true) {
-      //  Console.WriteLine("La réponse est correcte");
-      //  Counter++;
-      //} else {
-      //  Console.WriteLine("Perdu !");
-      //}
-      //ConsoleExtension.Pause();
-      //Console.WriteLine();
-
       
-
-      //if (Question4.Ask() == true) {
-      //  Console.WriteLine("La réponse est correcte");
-      //  Counter++;
-      //} else {
-      //  Console.WriteLine("Perdu !");
-      //}
-      //ConsoleExtension.Pause();
-
-      //Console.WriteLine();
-      //Console.WriteLine(string.Format("Vous avez réussi {0} question(s), votre pourcentage est de {1}%", Counter, Counter / 2f * 100f));
-      //ConsoleExtension.Pause();
     }
   }
 }
