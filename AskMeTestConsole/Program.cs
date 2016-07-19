@@ -29,29 +29,34 @@ namespace AskMeTestConsole {
       TQuestion Question1 = new TQuestion();
       TQuestion Question2 = new TQuestion(QHenri);
       TQuestion Question3 = new TQuestion(QHenri, HenriCheval, 1);
+      TQuestion Question4 = new TQuestion(QSang, QBloodAnswer, 2); ;
 
-      if (Question3.Ask() == true) {
-        Console.WriteLine("La réponse est correcte");
-        Counter++;
-      } else {
-        Console.WriteLine("Perdu !");
-      }
-      ConsoleExtension.Pause();
-      Console.WriteLine();
+      TQuestionCollection MesQuestions = new TQuestionCollection("Mes Questions", "Questions cours EAD", new List<TQuestion>() { Question3, Question4 });
+      MesQuestions.Ask();
+    
 
-      TQuestion Question4 = new TQuestion(QSang, QBloodAnswer, 2);
+      //if (Question3.Ask() == true) {
+      //  Console.WriteLine("La réponse est correcte");
+      //  Counter++;
+      //} else {
+      //  Console.WriteLine("Perdu !");
+      //}
+      //ConsoleExtension.Pause();
+      //Console.WriteLine();
 
-      if (Question4.Ask() == true) {
-        Console.WriteLine("La réponse est correcte");
-        Counter++;
-      } else {
-        Console.WriteLine("Perdu !");
-      }
-      ConsoleExtension.Pause();
+      
 
-      Console.WriteLine();
-      Console.WriteLine(string.Format("Vous avez réussi {0} question(s), votre pourcentage est de {1}%", Counter, Counter / 2f * 100f));
-      ConsoleExtension.Pause();
+      //if (Question4.Ask() == true) {
+      //  Console.WriteLine("La réponse est correcte");
+      //  Counter++;
+      //} else {
+      //  Console.WriteLine("Perdu !");
+      //}
+      //ConsoleExtension.Pause();
+
+      //Console.WriteLine();
+      //Console.WriteLine(string.Format("Vous avez réussi {0} question(s), votre pourcentage est de {1}%", Counter, Counter / 2f * 100f));
+      //ConsoleExtension.Pause();
     }
   }
 }
