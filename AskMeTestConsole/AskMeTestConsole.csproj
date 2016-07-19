@@ -64,7 +64,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="data\questions.xml" />
+    <None Include="data\questions.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -9,6 +9,7 @@ using System.Xml.Linq;
 namespace AskMeLib {
   public class TQuestion {
 
+    public const string XML_THIS_ELEMENT = "Question";
     public const string XML_ATTRIBUTE_TITLE = "Title";
     public const string XML_ATTRIBUTE_CORRECT_ANSWER = "CorrectAnswer";
     public const string XML_ELEMENT_CHOICE = "Choice";
@@ -37,7 +38,7 @@ namespace AskMeLib {
       }
     }
 
-    public TQuestion(XElement element) {
+    public TQuestion(XElement element) : this () {
       Title = element.SafeReadAttribute<string>(XML_ATTRIBUTE_TITLE, "");
       CorrectAnswer = element.SafeReadAttribute<int>(XML_ATTRIBUTE_CORRECT_ANSWER, 0);
       if (element.Elements(XML_ELEMENT_CHOICE).Count()>0 ) {
