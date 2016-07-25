@@ -7,46 +7,36 @@ using BLTools;
 using System.Xml.Linq;
 
 namespace AskMeLib {
-  public class TQuestion {
+  public class TQuestion : TXmlBase {
 
     public const string XML_THIS_ELEMENT = "Question";
-    public const string XML_ATTRIBUTE_TITLE = "Title";
-    public const string XML_ATTRIBUTE_CORRECT_ANSWER = "CorrectAnswer";
-    public const string XML_ELEMENT_CHOICE = "Choice";
-    public const string XML_ATTRIBUTE_CHOICE_TEXT = "Text";
+    public const string XML_ATTRIBUTE_QUESTION_TYPE = "QuestionType";
 
     #region Propriétés
-    public string Title { get; set; }
-    public List<string> Choices { get; set; }
-    public int CorrectAnswer { get; set; }
+    public string QuestionType { get; set; }
+    public TChoiceCollection Choices { get; set; } = new TChoiceCollection();
     public int CurrentChoice { get; set; }
     #endregion Propriétés
 
     #region Constructors
-    public TQuestion() {
-      Title = "";
-      Choices = new List<string>();
+    public TQuestion() : base() {
+      QuestionType = "QCM1";
     }
-    public TQuestion(string title) : this() {
-      Title = title;
+    public TQuestion(string title) : base() {
+      Name = title;
+      QuestionType = "QCM1";
     }
-    public TQuestion(string title, IEnumerable<string> choices, int correctAnswer) : this() {
-      Title = title;
-      CorrectAnswer = correctAnswer;
-      foreach (string ChoiceItem in choices) {
-        Choices.Add(ChoiceItem);
+    public TQuestion(string title, IEnumerable<TChoice> choices) : base() {
+      Name = title;
+      foreach (TChoice ChoiceItem in choices) {
+        Choices.Items.Add(ChoiceItem);
       }
+      QuestionType = "QCM1";
     }
 
-    public TQuestion(XElement element) : this () {
-      Title = element.SafeReadAttribute<string>(XML_ATTRIBUTE_TITLE, "");
-      CorrectAnswer = element.SafeReadAttribute<int>(XML_ATTRIBUTE_CORRECT_ANSWER, 0);
-      if (element.Elements(XML_ELEMENT_CHOICE).Count()>0 ) {
-        foreach(XElement ChoiceItem in element.Elements(XML_ELEMENT_CHOICE)) {
-          string TempChoice = ChoiceItem.SafeReadAttribute<string>(XML_ATTRIBUTE_CHOICE_TEXT, "");
-          Choices.Add(TempChoice);
-        }
-      }
+    public TQuestion(XElement element) : base() {
+      QuestionType = element.SafeReadAttribute<string>(XML_ATTRIBUTE_QUESTION_TYPE, "QCM1");
+      Choices = new TChoiceCollection(element.SafeReadElement(TChoiceCollection.XML_THIS_ELEMENT));
     }
     #endregion Constructors
 
@@ -55,10 +45,10 @@ namespace AskMeLib {
 
       // Display the question and get a valid answer
       do {
-        Console.WriteLine(Title);
+        Console.WriteLine(Name);
         int i = 1;
-        foreach (string ChoixItem in Choices) {
-          Console.WriteLine(string.Format("  {0}. {1}", i++, ChoixItem));
+        foreach (TChoice ChoixItem in Choices.Items) {
+          Console.WriteLine($"  {i++}. {ChoixItem.Name} ({(string.IsNullOrWhiteSpace(ChoixItem.Description) ? "" : ChoixItem.Description)})");
         }
         Console.WriteLine("Veuillez choisir une des valeurs proposées");
 
@@ -73,7 +63,7 @@ namespace AskMeLib {
       } while (!ReponseOk);
 
       // Test the answer for correctness
-      if (CurrentChoice == CorrectAnswer) {
+      if (Choices.Items[CurrentChoice-1].IsCorrect) { 
         return true;
       } else {
         return false;

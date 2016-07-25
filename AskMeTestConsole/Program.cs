@@ -5,38 +5,59 @@ using System.Text;
 using System.Threading.Tasks;
 using BLTools.ConsoleExtension;
 using AskMeLib;
+using BLTools;
+using BLTools.Debugging;
+using System.IO;
 
 namespace AskMeTestConsole {
   class Program {
     static void Main(string[] args) {
 
-      //const string QHenri = "Quelle est la couleur du cheval blanc d'Henri IV";
-      //List<string> HenriCheval = new List<string>() {
-      //  "blanc",
-      //  "noir",
-      //  "vert",
-      //  "bleu"
-      //};
-      //const string QSang = "Quelle est la proportion de globules rouges/globules blancs/plaquettes dans le sang ?";
-      //List<string> QBloodAnswer = new List<string>() {
-      //  "10%, 60%, 30%",
-      //  "70%, 25%, 5%",
-      //  "42%, 55%, 3%",
-      //  "1%, 1%, 98%"
-      //};
+      SplitArgs Args = new SplitArgs(args);
 
-      //TQuestion Question1 = new TQuestion();
-      //TQuestion Question2 = new TQuestion(QHenri);
-      //TQuestion Question3 = new TQuestion(QHenri, HenriCheval, 1);
-      //TQuestion Question4 = new TQuestion(QSang, QBloodAnswer, 2); ;
+      TraceFactory.AddTraceConsole();
 
-      //TQuestionCollection MesQuestions = new TQuestionCollection("Mes Questions", "Questions cours EAD", new List<TQuestion>() { Question3, Question4 });
-      //MesQuestions.Ask();
+      if (Args.IsDefined("help") || Args.IsDefined("?")) {
+        Usage();
+      }
+      string Command = Args.GetValue<string>("command", "list");
+      string DataFile = Args.GetValue<string>("data", "");
 
-      TQuestionCollection MaCollection = new TQuestionCollection(@"data\questions.xml");
-      MaCollection.Load();
-      MaCollection.Ask();
+      if (Command=="load") {
+        if (!File.Exists(DataFile)) {
+          Usage("Data file is missing or access is denied");
+        }
+        
 
+      }
+
+      if (Command=="list") {
+        foreach(string FileItem in Directory.GetFiles(DataFile, "*.qcm")) {
+          TQuestionFile TestFile = new TQuestionFile(FileItem);
+          TQuestionFileHeader Header = TestFile.ReadHeader();
+          if (Header != null) {
+            Console.Write($"File : {FileItem}");
+            Console.Write($", Name : {Header.Name}");
+            Console.Write($", Description : {Header.Description}");
+            Console.Write($", Langage : {Header.Language}");
+            Console.WriteLine();
+          }
+        }
+        ConsoleExtension.Pause();
+      }
+      
+
+    }
+
+    static void Usage(string message="") {
+      if (message!="") {
+        Console.WriteLine(message);
+      }
+      Console.WriteLine($"AskMe v{"0.1"}");
+      Console.WriteLine("Usage: AskMe /help | /?");
+      Console.WriteLine("             [/Command=list (default)|load]");
+      Console.WriteLine("             [/data=<data file>]");
+      Environment.Exit(1);
     }
   }
 }

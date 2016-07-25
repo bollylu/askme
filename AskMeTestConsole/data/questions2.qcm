@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<root>
+
+  <Header Name="Disney002" Description="Les dessins animés de Disney, volume 2" CreationTime="2016-07-25 16:07" CreatedBy="Luc" Language="FR">
+    <Security IsEncrypted="false" Password=""/>
+  </Header>
+
+  <List>
+    <Questions Name="Princesses" Description="Questions sur les princesses" Category="fun">
+
+      <Question Name="Qui est la plus belle ?" QuestionType="QCM1" >
+        <Choices>
+          <Choice Name="Blanche-Neige" Description="La princesse Blanche-neige" IsCorrect="True"></Choice>
+          <Choice Name="Cendrillon" Description="La future princesse Cendrillon"></Choice>
+          <Choice Name="Le Belle-au-bois-dormant" Description="La princesse qui s'endort"></Choice>
+        </Choices>
+        <Hint>On en trouve en hiver</Hint>
+        <Explain>Dans Blanche-neige et les 7 nains, la Reine est en colère parce que le miroir lui dit sans arrêt que Blanche-neige est la plus belle</Explain>
+      </Question>
+
+
+      <Question Name="Qui nage et respire sous l'eau ?" QuestionType="QCM1" >
+        <Choices>
+          <Choice Name="Arielle" Description="Dans la petite sirène" IsCorrect="True"></Choice>
+          <Choice Name="La grenouille" Description="Dans La princesse et la grenouille"></Choice>
+          <Choice Name="O'Malley" Description="Dans les aristochats"></Choice>
+        </Choices>
+        <Hint>C'est presque de la lessive</Hint>
+        <Explain>Arielle est une sirène et donc peut respirer sous l'eau</Explain>
+      </Question>
+      
+    </Questions>
+
+    <Questions Name="Princes" Description="Questions sur les princes et les héros" Category="fun">
+      <Question Name="Qui vit en haut d'une tour" QuestionType="QCM1" >
+        <Choices>
+          <Choice Name="Réponse" Description="Bizarre comme nom"></Choice>
+          <Choice Name="Quasimodo" Description="Dans Notre-Dame de Paris" IsCorrect="True"></Choice>
+          <Choice Name="Shrek" Description="Ogre vert"></Choice>
+        </Choices>
+        <Hint>Avec une bosse</Hint>
+      </Question>
+
+      <Question Name="Qui commence comme voleur, puis devient prince" QuestionType="QCM1" >
+        <Choices>
+          <Choice Name="Bob l'éponge" Description="Au fond de la mer"></Choice>
+          <Choice Name="Aladdin" Description="Dans Aladdin" IsCorrect="True"></Choice>
+          <Choice Name="Hercule" Description="Fils de Zeus"></Choice>
+        </Choices>
+        <Hint>Singe et perroquet</Hint>
+        <Explain>Aladdin est un voleur qui deviendra prince en épousant la princesse</Explain>
+      </Question>
+    
+    </Questions>
+    
+  </List>
+</root>
