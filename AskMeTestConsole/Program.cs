@@ -20,43 +20,47 @@ namespace AskMeTestConsole {
       if (Args.IsDefined("help") || Args.IsDefined("?")) {
         Usage();
       }
-      string Command = Args.GetValue<string>("command", "list");
-      string DataFile = Args.GetValue<string>("data", "");
 
-      if (Command=="load") {
-        if (!File.Exists(DataFile)) {
-          Usage("Data file is missing or access is denied");
+      string RepositoryPath = Args.GetValue<string>("repository", @".\");
+      string Command = Args.GetValue<string>("command", "list");
+      string DataFile = Args.GetValue<string>("file", "");
+      string Category = Args.GetValue<string>("category", "");
+
+
+      if (Command == "load") {
+        using (TRepository Repository = new TRepository(RepositoryPath)) {
+          TQuestionFile TestFile = Repository.GetContent(Category).SingleOrDefault(x => Path.GetFileNameWithoutExtension(x.Location) == DataFile);
+          if (TestFile == null) {
+            Usage($"Data file is missing or access is denied : {DataFile}");
+          }
+          TestFile.Load();
+          foreach (TQuestionCollection QuestionsItem in TestFile.Items) {
+            QuestionsItem.Ask();
+          }
+          ConsoleExtension.Pause();
         }
-        
 
       }
 
-      if (Command=="list") {
-        foreach(string FileItem in Directory.GetFiles(DataFile, "*.qcm")) {
-          TQuestionFile TestFile = new TQuestionFile(FileItem);
-          TQuestionFileHeader Header = TestFile.ReadHeader();
-          if (Header != null) {
-            Console.Write($"File : {FileItem}");
-            Console.Write($", Name : {Header.Name}");
-            Console.Write($", Description : {Header.Description}");
-            Console.Write($", Langage : {Header.Language}");
-            Console.WriteLine();
-          }
+      if (Command == "list") {
+        using (TRepository Repository = new TRepository(RepositoryPath)) {
+          Console.WriteLine(Repository.GetContentList());
         }
         ConsoleExtension.Pause();
       }
-      
 
     }
 
-    static void Usage(string message="") {
-      if (message!="") {
+    static void Usage(string message = "") {
+      if (message != "") {
         Console.WriteLine(message);
       }
-      Console.WriteLine($"AskMe v{"0.1"}");
-      Console.WriteLine("Usage: AskMe /help | /?");
-      Console.WriteLine("             [/Command=list (default)|load]");
-      Console.WriteLine("             [/data=<data file>]");
+      Console.WriteLine($@"AskMe v{"0.1"}");
+      Console.WriteLine(@"Usage: AskMe /help | /?");
+      Console.WriteLine(@"             [/repository=<folder path> (default=.\)]");
+      Console.WriteLine(@"             [/command=list (default)|load]");
+      Console.WriteLine(@"             [/data=<data file>]");
+      ConsoleExtension.Pause();
       Environment.Exit(1);
     }
   }

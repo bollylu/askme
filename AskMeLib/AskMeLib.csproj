@@ -52,6 +52,7 @@
     <Compile Include="TQuestionCollection.cs" />
     <Compile Include="TQuestionFileHeader.cs" />
     <Compile Include="TQuestionFile.cs" />
+    <Compile Include="TRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

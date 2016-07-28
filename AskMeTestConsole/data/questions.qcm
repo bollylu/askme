@@ -2,12 +2,12 @@
 
 <root>
 
-  <Header Name="Disney001" Description="Les dessins animés de Disney, volume 1" CreationTime="2016-07-25 14:17" CreatedBy="Luc" Language="FR">
+  <Header Name="Disney001" Description="Les dessins animés de Disney, volume 1" CreationTime="2016-07-25 14:17" CreatedBy="Luc" Language="FR" Category="fun">
     <Security IsEncrypted="false" Password=""/>
   </Header>
 
-  <List>
-    <Questions Name="Princesses" Description="Questions sur les princesses" Category="fun">
+ 
+    <Questions Name="Princesses" Description="Questions sur les princesses" >
 
       <Question Name="Qui est la plus belle ?" QuestionType="QCM1" >
         <Choices>
@@ -32,7 +32,7 @@
       
     </Questions>
 
-    <Questions Name="Princes" Description="Questions sur les princes et les héros" Category="fun">
+    <Questions Name="Princes" Description="Questions sur les princes et les héros">
       <Question Name="Qui vit en haut d'une tour" QuestionType="QCM1" >
         <Choices>
           <Choice Name="Réponse" Description="Bizarre comme nom"></Choice>
@@ -54,5 +54,4 @@
     
     </Questions>
     
-  </List>
 </root>

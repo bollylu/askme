@@ -34,7 +34,7 @@ namespace AskMeLib {
       QuestionType = "QCM1";
     }
 
-    public TQuestion(XElement element) : base() {
+    public TQuestion(XElement element) : base(element) {
       QuestionType = element.SafeReadAttribute<string>(XML_ATTRIBUTE_QUESTION_TYPE, "QCM1");
       Choices = new TChoiceCollection(element.SafeReadElement(TChoiceCollection.XML_THIS_ELEMENT));
     }

@@ -14,12 +14,12 @@ namespace AskMeLib {
 
     public const string XML_THIS_ELEMENT = "Questions";
 
-    #region Propriétés
+    #region --- Properties ------------------------------------------------------------------------
     public List<TQuestion> Items { get; set; } = new List<TQuestion>();
     public int Counter { get; set; }
-    #endregion Propriétés
+    #endregion --- Properties ---------------------------------------------------------------------
 
-    #region Constructeurs
+    #region --- Constructeurs ---------------------------------------------------------------------
     public TQuestionCollection(): base() {
     }
     
@@ -37,13 +37,13 @@ namespace AskMeLib {
         }
       }
     }
-    #endregion Constructeurs
+    #endregion --- Constructeurs ------------------------------------------------------------------
 
     public void Ask() {
       Counter = 0;
-      Console.WriteLine(Name);
+      Console.WriteLine($"Collection : {Name}");
       Console.WriteLine(Description);
-      Console.WriteLine("--------------------------------------------------");
+      Console.WriteLine(new string('-', Description.Length));
 
       foreach (TQuestion QuestionItem in Items) {
         if (QuestionItem.Ask() == true) {
@@ -56,8 +56,6 @@ namespace AskMeLib {
       }
       Console.WriteLine();
       Console.WriteLine($"Vous avez réussi {Counter} question(s), votre pourcentage est de {Counter / 2f * 100f}%");
-      ConsoleExtension.Pause();
-
 
     }
     
