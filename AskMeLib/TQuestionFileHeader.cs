@@ -16,7 +16,7 @@ namespace AskMeLib {
     public const string XML_ATTRIBUTE_CREATION_TIME = "CreationTime";
     public const string XML_ATTRIBUTE_CREATED_BY = "CreatedBy";
     public const string XML_ATTRIBUTE_LANGUAGE = "Language";
-    public const string XML_ATTRIBUTE_CATEGORY = "Category"; 
+    public const string XML_ATTRIBUTE_CATEGORY = "Category";
     #endregion --- XML constants -------------------------------------------------------------------------------
 
     #region --- Public properties ------------------------------------------------------------------------------
@@ -51,5 +51,9 @@ namespace AskMeLib {
       return RetVal.ToString();
     }
     #endregion --- Converters -------------------------------------------------------------------------------------
+
+    public bool IsLanguageOk(string language = "") {
+      return Language.ToLower() == language.ToLower();
+    }
   }
 }

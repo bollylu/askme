@@ -25,6 +25,7 @@ namespace AskMeTestConsole {
       string Command = Args.GetValue<string>("command", "list");
       string DataFile = Args.GetValue<string>("file", "");
       string Category = Args.GetValue<string>("category", "");
+      string Language = Args.GetValue<string>("language", "FR");
 
 
       if (Command == "load") {
@@ -33,20 +34,20 @@ namespace AskMeTestConsole {
           if (TestFile == null) {
             Usage($"Data file is missing or access is denied : {DataFile}");
           }
-          TestFile.Load();
+          TestFile.ReadData();
           foreach (TQuestionCollection QuestionsItem in TestFile.Items) {
             QuestionsItem.Ask();
           }
-          ConsoleExtension.Pause();
+          ConsoleExtension.Pause(1000);
         }
 
       }
 
       if (Command == "list") {
         using (TRepository Repository = new TRepository(RepositoryPath)) {
-          Console.WriteLine(Repository.GetContentList());
+          Console.WriteLine(Repository.GetContentList(Category, Language));
         }
-        ConsoleExtension.Pause();
+        ConsoleExtension.Pause(1000);
       }
 
     }

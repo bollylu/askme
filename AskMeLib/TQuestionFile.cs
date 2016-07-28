@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 
 namespace AskMeLib {
-  public class TQuestionFile :TXmlBase, IDisposable {
+  public class TQuestionFile : TXmlBase, IDisposable {
 
     #region --- XML constants ----------------------------------------------------------------------------------
-    public const string XML_THIS_ELEMENT = "root"; 
+    public const string XML_THIS_ELEMENT = "root";
     #endregion --- XML constants -------------------------------------------------------------------------------
 
 
@@ -32,7 +32,7 @@ namespace AskMeLib {
         _Header = null;
       }
     }
-    protected TQuestionFileHeader _Header; 
+    protected TQuestionFileHeader _Header;
     #endregion --- Public properties ---------------------------------------------------------------------------
 
     #region --- Constructor(s) --------------------------------------------------------------------
@@ -50,10 +50,10 @@ namespace AskMeLib {
       RetVal.Append($"File : {Location}");
       RetVal.Append($", {Header}");
       return RetVal.ToString();
-    } 
+    }
     #endregion --- Converters ---------------------------------------------------------------------
 
-    public void Load(string location = "") {
+    public void ReadData(string location = "") {
       #region Validate parameters
       if (location != "") {
         Location = location;
@@ -68,7 +68,6 @@ namespace AskMeLib {
       try {
         XDocument MyData = XDocument.Load(Location);
         XElement Root = MyData.Element(XML_THIS_ELEMENT);
-        _Header = new TQuestionFileHeader(Root.Element(TQuestionFileHeader.XML_THIS_ELEMENT));
         IEnumerable<XElement> QuestionCollections = Root.Elements(TQuestionCollection.XML_THIS_ELEMENT);
         if (QuestionCollections.Count() > 0) {
           foreach (XElement QuestionCollectionItem in QuestionCollections) {
@@ -83,7 +82,7 @@ namespace AskMeLib {
       }
     }
 
-    public TQuestionFileHeader ReadHeader(string location="") {
+    public TQuestionFileHeader ReadHeader(string location = "") {
       #region Validate parameters
       if (location != "") {
         Location = location;
@@ -107,16 +106,24 @@ namespace AskMeLib {
       }
     }
 
-    public string HeaderText() {
+    public string GetHeaderText() {
       return ReadHeader().ToString();
     }
 
-    public string HeaderTextWithDetails() {
-      Load();
+    public string GetHeaderTextWithDetails() {
+      ReadData();
       StringBuilder RetVal = new StringBuilder(Header.ToString());
       RetVal.Append($", {Items.Count()} collection(s) of questions");
       return RetVal.ToString();
     }
 
+    public bool IsLanguageOk(string language = "") {
+      #region === Validate parameters ===
+      if (Header == null) {
+        return false;
+      } 
+      #endregion === Validate parameters ===
+      return Header.Language.ToLower() == language.ToLower();
+    }
   }
 }
