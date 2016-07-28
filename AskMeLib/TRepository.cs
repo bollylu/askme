@@ -8,9 +8,12 @@ using System.Threading.Tasks;
 namespace AskMeLib {
   public class TRepository : TXmlBase, IDisposable {
 
+    #region --- Public properties -----------------------------------------------------------------
     public string Location { get; set; }
     public List<TQuestionFile> Items { get; set; } = new List<TQuestionFile>();
+    #endregion --- Public properties --------------------------------------------------------------
 
+    #region --- Constructor(s) --------------------------------------------------------------------
     public TRepository(string location) : base() {
       Location = location;
     }
@@ -18,7 +21,9 @@ namespace AskMeLib {
     public void Dispose() {
       Items.Clear();
     }
+    #endregion --- Constructor(s) -----------------------------------------------------------------
 
+    #region --- Converters ------------------------------------------------------------------------
     public override string ToString() {
       StringBuilder RetVal = new StringBuilder();
       foreach (TQuestionFile QuestionFileItem in Items) {
@@ -26,6 +31,7 @@ namespace AskMeLib {
       }
       return RetVal.ToString();
     }
+    #endregion --- Converters ---------------------------------------------------------------------
 
     public virtual List<TQuestionFile> GetContent(string category = "", bool recurse = false) {
       Items.Clear();
@@ -60,6 +66,6 @@ namespace AskMeLib {
       return RetVal.ToString();
     }
 
-    
+
   }
 }

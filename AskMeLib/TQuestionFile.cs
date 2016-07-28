@@ -8,19 +8,22 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 
 namespace AskMeLib {
-  public class TQuestionFile :TXmlBase {
+  public class TQuestionFile :TXmlBase, IDisposable {
 
-    public const string XML_THIS_ELEMENT = "root";
-    
+    #region --- XML constants ----------------------------------------------------------------------------------
+    public const string XML_THIS_ELEMENT = "root"; 
+    #endregion --- XML constants -------------------------------------------------------------------------------
+
 
     public const string QUESTION_FILE_EXTENSION = "*.qcm";
 
+    #region --- Public properties ------------------------------------------------------------------------------
     public string Location { get; set; }
     public List<TQuestionCollection> Items { get; set; } = new List<TQuestionCollection>();
 
     public TQuestionFileHeader Header {
       get {
-        if (_Header==null) {
+        if (_Header == null) {
           _Header = ReadHeader();
         }
         return _Header;
@@ -29,11 +32,15 @@ namespace AskMeLib {
         _Header = null;
       }
     }
-    protected TQuestionFileHeader _Header;
+    protected TQuestionFileHeader _Header; 
+    #endregion --- Public properties ---------------------------------------------------------------------------
 
     #region --- Constructor(s) --------------------------------------------------------------------
     public TQuestionFile(string location) : base() {
       Location = location;
+    }
+    public void Dispose() {
+      Items.Clear();
     }
     #endregion --- Constructor(s) -----------------------------------------------------------------
 

@@ -12,25 +12,27 @@ using System.Diagnostics;
 namespace AskMeLib {
   public class TChoiceCollection : TXmlBase {
 
-    public const string XML_THIS_ELEMENT = "Choices";
+    #region --- XML constants ----------------------------------------------------------------------------------
+    public const string XML_THIS_ELEMENT = "Choices"; 
+    #endregion --- XML constants -------------------------------------------------------------------------------
 
-    #region Propriétés
+    #region --- Public properties ------------------------------------------------------------------------------
     public List<TChoice> Items { get; set; } = new List<TChoice>();
-    #endregion Propriétés
+    #endregion --- Public properties ---------------------------------------------------------------------------
 
-    #region Constructeurs
-    public TChoiceCollection(): base() {
+    #region --- Constructor(s) ---------------------------------------------------------------------------------
+    public TChoiceCollection() : base() {
     }
-    
+
     public TChoiceCollection(XElement element) : base(element) {
       if (element.Name != XName.Get(XML_THIS_ELEMENT)) {
         return;
       }
       foreach (XElement ChoiceItem in element.Elements(TChoice.XML_THIS_ELEMENT)) {
-          Items.Add(new TChoice(ChoiceItem));
-        }
-    }
-    #endregion Constructeurs
+        Items.Add(new TChoice(ChoiceItem));
+      }
+    } 
+    #endregion --- Constructor(s) ------------------------------------------------------------------------------
 
   }
 }

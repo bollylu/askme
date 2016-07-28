@@ -12,7 +12,9 @@ using System.Diagnostics;
 namespace AskMeLib {
   public class TQuestionCollection : TXmlBase {
 
+    #region --- XML constants ----------------------------------------------------------------------------------
     public const string XML_THIS_ELEMENT = "Questions";
+    #endregion --- XML constants -------------------------------------------------------------------------------
 
     #region --- Properties ------------------------------------------------------------------------
     public List<TQuestion> Items { get; set; } = new List<TQuestion>();
@@ -20,9 +22,9 @@ namespace AskMeLib {
     #endregion --- Properties ---------------------------------------------------------------------
 
     #region --- Constructeurs ---------------------------------------------------------------------
-    public TQuestionCollection(): base() {
+    public TQuestionCollection() : base() {
     }
-    
+
     public TQuestionCollection(string name, string description, IEnumerable<TQuestion> questions) : base() {
       Name = name;
       Description = description;
@@ -58,6 +60,6 @@ namespace AskMeLib {
       Console.WriteLine($"Vous avez réussi {Counter} question(s), votre pourcentage est de {Counter / 2f * 100f}%");
 
     }
-    
+
   }
 }

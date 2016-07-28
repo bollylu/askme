@@ -9,13 +9,18 @@ using System.Xml.Linq;
 namespace AskMeLib {
   public class TXmlBase : IToXml {
 
+    #region --- XML constants ----------------------------------------------------------------------------------
     public const string XML_ATTRIBUTE_NAME = "Name";
     public const string XML_ATTRIBUTE_DESCRIPTION = "Description";
+    #endregion --- XML constants -------------------------------------------------------------------------------
 
+    #region --- Public properties ------------------------------------------------------------------------------
     public string Name { get; set; }
     public string Description { get; set; }
+    #endregion --- Public properties ---------------------------------------------------------------------------
 
 
+    #region --- Constructor(s) ---------------------------------------------------------------------------------
     public TXmlBase() {
       Name = "";
       Description = "";
@@ -25,7 +30,9 @@ namespace AskMeLib {
       Name = element.SafeReadAttribute<string>(XML_ATTRIBUTE_NAME, "");
       Description = element.SafeReadAttribute<string>(XML_ATTRIBUTE_DESCRIPTION, "");
     }
+    #endregion --- Constructor(s) ------------------------------------------------------------------------------
 
+    #region --- Converters -------------------------------------------------------------------------------------
     public virtual XElement ToXml() {
       return null;
     }
@@ -38,7 +45,8 @@ namespace AskMeLib {
     public virtual XElement ToXml(XName name) {
       XElement RetVal = new XElement(name);
       return RetVal;
-    }
+    } 
+    #endregion --- Converters -------------------------------------------------------------------------------------
 
   }
 
