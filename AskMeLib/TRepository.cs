@@ -11,6 +11,18 @@ namespace AskMeLib {
     #region --- Public properties -----------------------------------------------------------------
     public string Location { get; set; }
     public List<TQuestionFile> Items { get; set; } = new List<TQuestionFile>();
+
+    public bool IsInvalid {
+      get {
+        if (string.IsNullOrWhiteSpace(Location)) {
+          return true;
+        }
+        if (!Directory.Exists(Location)) {
+          return true;
+        }
+        return false;
+      }
+    }
     #endregion --- Public properties --------------------------------------------------------------
 
     #region --- Constructor(s) --------------------------------------------------------------------
@@ -36,22 +48,20 @@ namespace AskMeLib {
     public virtual List<TQuestionFile> GetContent(string category = "", string language = "", bool recurse = false) {
       Items.Clear();
 
-      if (string.IsNullOrWhiteSpace(Location)) {
+      #region === Validate parameters ===
+      if (IsInvalid) {
         return null;
       }
-      if (!Directory.Exists(Location)) {
-        return null;
-      }
+      #endregion === Validate parameters ===
 
       string[] Files;
       if (recurse) {
-        Files = Directory.GetFiles(Location, TQuestionFile.QUESTION_FILE_EXTENSION, SearchOption.TopDirectoryOnly);
+        Files = Directory.GetFiles(Location, $"*{TQuestionFile.QUESTION_FILE_EXTENSION}", SearchOption.TopDirectoryOnly);
       } else {
-        Files = Directory.GetFiles(Location, TQuestionFile.QUESTION_FILE_EXTENSION, SearchOption.AllDirectories);
+        Files = Directory.GetFiles(Location, $"*{TQuestionFile.QUESTION_FILE_EXTENSION}", SearchOption.AllDirectories);
       }
       foreach (string FileItem in Files) {
         TQuestionFile TempQuestionFile = new TQuestionFile(FileItem);
-        //TempQuestionFile.Load();
         if (TempQuestionFile.Header.Category.ToLower().Contains(category.ToLower()) && TempQuestionFile.IsLanguageOk(language)) {
           Items.Add(TempQuestionFile);
         }
@@ -67,6 +77,18 @@ namespace AskMeLib {
       return RetVal.ToString();
     }
 
+    public virtual TQuestionFile GetFile(string filename) {
+      #region === Validate parameters ===
+      if (IsInvalid) {
+        return null;
+      }
+      #endregion === Validate parameters ===
+      string RealFilePath = Directory.GetFiles(Location, $"{filename}{TQuestionFile.QUESTION_FILE_EXTENSION}", SearchOption.AllDirectories).FirstOrDefault();
+      if (RealFilePath==null) {
+        return null;
+      }
+      return new TQuestionFile(RealFilePath);
+    }
 
   }
 }

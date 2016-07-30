@@ -30,7 +30,7 @@ namespace AskMeTestConsole {
 
       if (Command == "load") {
         using (TRepository Repository = new TRepository(RepositoryPath)) {
-          TQuestionFile TestFile = Repository.GetContent(Category).SingleOrDefault(x => Path.GetFileNameWithoutExtension(x.Location) == DataFile);
+          TQuestionFile TestFile = Repository.GetFile(DataFile);
           if (TestFile == null) {
             Usage($"Data file is missing or access is denied : {DataFile}");
           }

@@ -32,26 +32,4 @@
       
     </Questions>
 
-    <Questions Name="Princes" Description="Questions sur les princes et les héros">
-      <Question Name="Qui vit en haut d'une tour" QuestionType="QCM1" >
-        <Choices>
-          <Choice Name="Réponse" Description="Bizarre comme nom"></Choice>
-          <Choice Name="Quasimodo" Description="Dans Notre-Dame de Paris" IsCorrect="True"></Choice>
-          <Choice Name="Shrek" Description="Ogre vert"></Choice>
-        </Choices>
-        <Hint>Avec une bosse</Hint>
-      </Question>
-
-      <Question Name="Qui commence comme voleur, puis devient prince" QuestionType="QCM1" >
-        <Choices>
-          <Choice Name="Bob l'éponge" Description="Au fond de la mer"></Choice>
-          <Choice Name="Aladdin" Description="Dans Aladdin" IsCorrect="True"></Choice>
-          <Choice Name="Hercule" Description="Fils de Zeus"></Choice>
-        </Choices>
-        <Hint>Singe et perroquet</Hint>
-        <Explain>Aladdin est un voleur qui deviendra prince en épousant la princesse</Explain>
-      </Question>
-    
-    </Questions>
-    
 </root>

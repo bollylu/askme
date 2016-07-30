@@ -15,7 +15,7 @@ namespace AskMeLib {
     #endregion --- XML constants -------------------------------------------------------------------------------
 
 
-    public const string QUESTION_FILE_EXTENSION = "*.qcm";
+    public const string QUESTION_FILE_EXTENSION = ".qcm";
 
     #region --- Public properties ------------------------------------------------------------------------------
     public string Location { get; set; }
