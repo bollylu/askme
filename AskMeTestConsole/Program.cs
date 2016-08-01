@@ -8,6 +8,7 @@ using AskMeLib;
 using BLTools;
 using BLTools.Debugging;
 using System.IO;
+using AskMeWebService;
 
 namespace AskMeTestConsole {
   class Program {
@@ -44,10 +45,14 @@ namespace AskMeTestConsole {
       }
 
       if (Command == "list") {
-        using (TRepository Repository = new TRepository(RepositoryPath)) {
-          Console.WriteLine(Repository.GetContentList(Category, Language));
-        }
-        ConsoleExtension.Pause(1000);
+        AskMeWebClient Client = new AskMeWebClient();
+
+        Console.WriteLine(Client.GetContentList());
+
+        //using (TRepository Repository = new TRepository(RepositoryPath)) {
+        //  Console.WriteLine(Repository.GetContentList(Category, Language));
+        //}
+        ConsoleExtension.Pause(10000);
       }
 
     }

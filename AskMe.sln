@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AskMeLib", "AskMeLib\AskMeL
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AskMeTestConsole", "AskMeTestConsole\AskMeTestConsole.csproj", "{0687869A-549C-4ACF-A756-7531305876E9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AskMeWebService", "AskMeWebService\AskMeWebService.csproj", "{C228E6C2-1DC9-41D5-9AA6-B712250F0281}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{0687869A-549C-4ACF-A756-7531305876E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0687869A-549C-4ACF-A756-7531305876E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0687869A-549C-4ACF-A756-7531305876E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C228E6C2-1DC9-41D5-9AA6-B712250F0281}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C228E6C2-1DC9-41D5-9AA6-B712250F0281}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C228E6C2-1DC9-41D5-9AA6-B712250F0281}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C228E6C2-1DC9-41D5-9AA6-B712250F0281}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

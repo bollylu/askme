@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 
 namespace AskMeLib {
+  [Serializable]
   public class TQuestionFile : TXmlBase, IDisposable {
 
     #region --- XML constants ----------------------------------------------------------------------------------

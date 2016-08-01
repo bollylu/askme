@@ -62,16 +62,21 @@ namespace AskMeLib {
       }
       foreach (string FileItem in Files) {
         TQuestionFile TempQuestionFile = new TQuestionFile(FileItem);
-        if (TempQuestionFile.Header.Category.ToLower().Contains(category.ToLower()) && TempQuestionFile.IsLanguageOk(language)) {
+        if ((category == "" || TempQuestionFile.Header.Category.ToLower().Contains(category.ToLower()))
+          && (language == "" || TempQuestionFile.IsLanguageOk(language))) {
           Items.Add(TempQuestionFile);
         }
       }
       return Items;
 
     }
-    public string GetContentList(string category = "", string language="", bool recurse = false) {
+    public string GetContentList(string category = "", string language = "", bool recurse = false) {
       StringBuilder RetVal = new StringBuilder();
-      foreach (TQuestionFile QuestionFileItem in GetContent(category, language, recurse)) {
+      IEnumerable<TQuestionFile> Content = GetContent(category, language, recurse);
+      if (Content == null || Content.Count() == 0) {
+        return "";
+      }
+      foreach (TQuestionFile QuestionFileItem in Content) {
         RetVal.AppendLine(QuestionFileItem.GetHeaderTextWithDetails());
       }
       return RetVal.ToString();
@@ -84,7 +89,7 @@ namespace AskMeLib {
       }
       #endregion === Validate parameters ===
       string RealFilePath = Directory.GetFiles(Location, $"{filename}{TQuestionFile.QUESTION_FILE_EXTENSION}", SearchOption.AllDirectories).FirstOrDefault();
-      if (RealFilePath==null) {
+      if (RealFilePath == null) {
         return null;
       }
       return new TQuestionFile(RealFilePath);
