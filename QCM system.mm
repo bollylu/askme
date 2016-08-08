@@ -1,0 +1,217 @@
+<map version="freeplane 1.5.9">
+<!--To view this file, download free mind mapping software Freeplane from http://freeplane.sourceforge.net -->
+<node TEXT="QCM system" LOCALIZED_STYLE_REF="AutomaticLayout.level.root" FOLDED="false" ID="ID_431261515" CREATED="1470646516446" MODIFIED="1470650707144"><hook NAME="MapStyle">
+    <properties fit_to_viewport="false;"/>
+
+<map_styles>
+<stylenode LOCALIZED_TEXT="styles.root_node" STYLE="oval" UNIFORM_SHAPE="true" VGAP_QUANTITY="24.0 pt">
+<font SIZE="24"/>
+<stylenode LOCALIZED_TEXT="styles.predefined" POSITION="right" STYLE="bubble">
+<stylenode LOCALIZED_TEXT="default" COLOR="#000000" STYLE="fork">
+<font NAME="SansSerif" SIZE="10" BOLD="false" ITALIC="false"/>
+</stylenode>
+<stylenode LOCALIZED_TEXT="defaultstyle.details"/>
+<stylenode LOCALIZED_TEXT="defaultstyle.attributes">
+<font SIZE="9"/>
+</stylenode>
+<stylenode LOCALIZED_TEXT="defaultstyle.note" COLOR="#000000" BACKGROUND_COLOR="#ffffff" TEXT_ALIGN="LEFT"/>
+<stylenode LOCALIZED_TEXT="defaultstyle.floating">
+<edge STYLE="hide_edge"/>
+<cloud COLOR="#f0f0f0" SHAPE="ROUND_RECT"/>
+</stylenode>
+</stylenode>
+<stylenode LOCALIZED_TEXT="styles.user-defined" POSITION="right" STYLE="bubble">
+<stylenode LOCALIZED_TEXT="styles.topic" COLOR="#18898b" STYLE="fork">
+<font NAME="Liberation Sans" SIZE="10" BOLD="true"/>
+</stylenode>
+<stylenode LOCALIZED_TEXT="styles.subtopic" COLOR="#cc3300" STYLE="fork">
+<font NAME="Liberation Sans" SIZE="10" BOLD="true"/>
+</stylenode>
+<stylenode LOCALIZED_TEXT="styles.subsubtopic" COLOR="#669900">
+<font NAME="Liberation Sans" SIZE="10" BOLD="true"/>
+</stylenode>
+<stylenode LOCALIZED_TEXT="styles.important">
+<icon BUILTIN="yes"/>
+</stylenode>
+</stylenode>
+<stylenode LOCALIZED_TEXT="styles.AutomaticLayout" POSITION="right" STYLE="bubble">
+<stylenode LOCALIZED_TEXT="AutomaticLayout.level.root" COLOR="#000000" STYLE="oval" SHAPE_HORIZONTAL_MARGIN="10.0 pt" SHAPE_VERTICAL_MARGIN="10.0 pt">
+<font SIZE="18"/>
+</stylenode>
+<stylenode LOCALIZED_TEXT="AutomaticLayout.level,1" COLOR="#0033ff">
+<font SIZE="16"/>
+<edge COLOR="#ff0000"/>
+</stylenode>
+<stylenode LOCALIZED_TEXT="AutomaticLayout.level,2" COLOR="#00b439">
+<font SIZE="14"/>
+<edge COLOR="#0000ff"/>
+</stylenode>
+<stylenode LOCALIZED_TEXT="AutomaticLayout.level,3" COLOR="#990000">
+<font SIZE="12"/>
+<edge COLOR="#00ff00"/>
+</stylenode>
+<stylenode LOCALIZED_TEXT="AutomaticLayout.level,4" COLOR="#111111">
+<font SIZE="10"/>
+<edge COLOR="#ff00ff"/>
+</stylenode>
+<stylenode LOCALIZED_TEXT="AutomaticLayout.level,5">
+<edge COLOR="#00ffff"/>
+</stylenode>
+<stylenode LOCALIZED_TEXT="AutomaticLayout.level,6">
+<edge COLOR="#7c0000"/>
+</stylenode>
+<stylenode LOCALIZED_TEXT="AutomaticLayout.level,7">
+<edge COLOR="#00007c"/>
+</stylenode>
+<stylenode LOCALIZED_TEXT="AutomaticLayout.level,8">
+<edge COLOR="#007c00"/>
+</stylenode>
+<stylenode LOCALIZED_TEXT="AutomaticLayout.level,9">
+<edge COLOR="#7c007c"/>
+</stylenode>
+<stylenode LOCALIZED_TEXT="AutomaticLayout.level,10">
+<edge COLOR="#007c7c"/>
+</stylenode>
+<stylenode LOCALIZED_TEXT="AutomaticLayout.level,11">
+<edge COLOR="#7c7c00"/>
+</stylenode>
+</stylenode>
+</stylenode>
+</map_styles>
+</hook>
+<hook NAME="AutomaticEdgeColor" COUNTER="5" RULE="ON_BRANCH_CREATION"/>
+<node TEXT="Name" LOCALIZED_STYLE_REF="AutomaticLayout.level,1" POSITION="right" ID="ID_1477793718" CREATED="1470646533158" MODIFIED="1470650554689" HGAP_QUANTITY="-123.25 pt" VSHIFT_QUANTITY="779.25 pt">
+<node TEXT="AskMe" ID="ID_1249301661" CREATED="1470646537377" MODIFIED="1470646541871"/>
+<node TEXT="QuizMe" ID="ID_1848221552" CREATED="1470646543635" MODIFIED="1470646548380"/>
+</node>
+<node TEXT="Goals" LOCALIZED_STYLE_REF="AutomaticLayout.level,1" POSITION="left" ID="ID_1295734698" CREATED="1470646551963" MODIFIED="1470649428253">
+<node TEXT="Questions / answers / evaluation" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_1840223122" CREATED="1470647017695" MODIFIED="1470649312956">
+<node TEXT="Centralized storage of questions / answers" ID="ID_327626014" CREATED="1470647089719" MODIFIED="1470647112360"/>
+<node TEXT="Decentralized storage of questions / answers" ID="ID_1736360417" CREATED="1470647117398" MODIFIED="1470647137057"/>
+<node TEXT="Profile system for users follow-up of scores, history, statistics" ID="ID_274624631" CREATED="1470647144332" MODIFIED="1470647449068"/>
+</node>
+<node TEXT="Audience" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_1029268017" CREATED="1470647224671" MODIFIED="1470649428252" HGAP_QUANTITY="20.0 pt" VSHIFT_QUANTITY="27.75 pt">
+<node TEXT="Students as individual for exams preparation" ID="ID_1378697578" CREATED="1470647230258" MODIFIED="1470647296360"/>
+<node TEXT="Students for group course review" ID="ID_1412234637" CREATED="1470647260255" MODIFIED="1470647281676"/>
+<node TEXT="Anyone for game building / playing" ID="ID_521420611" CREATED="1470647305096" MODIFIED="1470647334271"/>
+<node TEXT="Teachers for exams preparation" ID="ID_1102616189" CREATED="1470647363712" MODIFIED="1470647390721"/>
+<node TEXT="Teachers for group course review" ID="ID_1386987351" CREATED="1470647392470" MODIFIED="1470647405030"/>
+</node>
+<node TEXT="Evolutions" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_33647691" CREATED="1470649323500" MODIFIED="1470649423548" HGAP_QUANTITY="10.25 pt" VSHIFT_QUANTITY="45.0 pt">
+<node TEXT="Partnership with schools" ID="ID_163200365" CREATED="1470649338999" MODIFIED="1470649351229"/>
+<node TEXT="Partnership with enterprises" ID="ID_528945274" CREATED="1470649353369" MODIFIED="1470649363552"/>
+<node TEXT="Computer based training" ID="ID_1888681780" CREATED="1470649373140" MODIFIED="1470649385872"/>
+</node>
+</node>
+<node TEXT="Technology" LOCALIZED_STYLE_REF="AutomaticLayout.level,1" POSITION="right" ID="ID_1428083492" CREATED="1470646558916" MODIFIED="1470650577573" HGAP_QUANTITY="59.0 pt" VSHIFT_QUANTITY="-54.0 pt">
+<node TEXT="Languages" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_1932803809" CREATED="1470646624330" MODIFIED="1470648891459">
+<node TEXT="Javascript" ID="ID_413204178" CREATED="1470646607140" MODIFIED="1470646613140"/>
+<node TEXT="HTML" ID="ID_377782961" CREATED="1470646595638" MODIFIED="1470646606040"/>
+<node TEXT="XML" ID="ID_898972690" CREATED="1470646583368" MODIFIED="1470646586229"/>
+<node TEXT="MS SQL" ID="ID_1208174022" CREATED="1470646588000" MODIFIED="1470646594405"/>
+<node TEXT="C#" ID="ID_174797607" CREATED="1470646572964" MODIFIED="1470646581794"/>
+</node>
+<node TEXT="Architecture" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_526512410" CREATED="1470646650681" MODIFIED="1470649669449">
+<node TEXT="Clients" LOCALIZED_STYLE_REF="AutomaticLayout.level,3" ID="ID_336008776" CREATED="1470646667701" MODIFIED="1470649669449" HGAP_QUANTITY="11.75 pt" VSHIFT_QUANTITY="-18.75 pt">
+<node TEXT="Rich fat client (text only)" ID="ID_991941408" CREATED="1470646706845" MODIFIED="1470646729983"/>
+<node TEXT="Rich fat client (WPF)" ID="ID_1622820913" CREATED="1470646731721" MODIFIED="1470646742257"/>
+<node TEXT="Client (Xamarin) iOS" ID="ID_345092431" CREATED="1470646760564" MODIFIED="1470648776766"/>
+<node TEXT="Client (Xamarin) Android" ID="ID_1754306172" CREATED="1470646788461" MODIFIED="1470648787948"/>
+<node TEXT="Client (Xamarin) Windows Phone / UWP" ID="ID_733555811" CREATED="1470646802709" MODIFIED="1470648795696"/>
+<node TEXT="Javascript web client with HTML" ID="ID_1722201002" CREATED="1470646828401" MODIFIED="1470646853781"/>
+<node TEXT="Rich fat client Linux" ID="ID_1643227570" CREATED="1470650491420" MODIFIED="1470650513779"/>
+<node TEXT="Rich fat client OS/x" ID="ID_1538467601" CREATED="1470650515206" MODIFIED="1470650526363"/>
+</node>
+<node TEXT="Servers" LOCALIZED_STYLE_REF="AutomaticLayout.level,3" ID="ID_1565662447" CREATED="1470646694707" MODIFIED="1470648920053">
+<node TEXT="Data storage in XML files in file system" ID="ID_900335228" CREATED="1470646863059" MODIFIED="1470648367343"/>
+<node TEXT="Data storage in SQL server(s) tables" ID="ID_251678715" CREATED="1470646900312" MODIFIED="1470646922623"/>
+<node TEXT="Data storage through providers" ID="ID_598742865" CREATED="1470646937412" MODIFIED="1470646951890">
+<node TEXT="Direct providers (File system, SQL, ...)" ID="ID_1937452126" CREATED="1470646975737" MODIFIED="1470646994525"/>
+<node TEXT="Web providers (web services)" ID="ID_542909689" CREATED="1470646997013" MODIFIED="1470647008789"/>
+</node>
+</node>
+</node>
+<node TEXT="Tools" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_23560370" CREATED="1470648436485" MODIFIED="1470649661168" HGAP_QUANTITY="13.25 pt" VSHIFT_QUANTITY="9.75 pt">
+<node TEXT="Visual Studio Comunity Edition" ID="ID_1399676752" CREATED="1470648449382" MODIFIED="1470648494132"/>
+<node TEXT="MS SQL server Express" ID="ID_718535179" CREATED="1470648471282" MODIFIED="1470648484901"/>
+<node TEXT="GitHub" ID="ID_1169808047" CREATED="1470648503115" MODIFIED="1470648511316"/>
+<node TEXT="visualstudio.com agile project management" ID="ID_1468661981" CREATED="1470648512693" MODIFIED="1470648556399"/>
+<node TEXT="Freeplane" ID="ID_170008446" CREATED="1470648725880" MODIFIED="1470648739553"/>
+</node>
+<node TEXT="Licensing" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_1180472469" CREATED="1470648443867" MODIFIED="1470649654011" HGAP_QUANTITY="13.25 pt" VSHIFT_QUANTITY="18.75 pt">
+<node TEXT="Display engines are free" ID="ID_190871197" CREATED="1470648561819" MODIFIED="1470648592035"/>
+<node TEXT="Data can be free or protected" ID="ID_1630848094" CREATED="1470648594310" MODIFIED="1470648628159"/>
+<node TEXT="Access to the data servers can be free or protected" ID="ID_765781744" CREATED="1470648653826" MODIFIED="1470648680854"/>
+<node TEXT="Access to the statistics can be free or protected" ID="ID_1998010699" CREATED="1470648682321" MODIFIED="1470648705713"/>
+<node TEXT="When adding data to shared data, provide a reward mechanism for the user" ID="ID_237266427" CREATED="1470650171121" MODIFIED="1470650208857"/>
+</node>
+<node TEXT="User experience" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_1185507861" CREATED="1470649046815" MODIFIED="1470649677009" HGAP_QUANTITY="11.75 pt" VSHIFT_QUANTITY="22.5 pt">
+<node TEXT="Language would adapt to the user" ID="ID_990444163" CREATED="1470649068318" MODIFIED="1470649098707">
+<node TEXT="English" ID="ID_731094525" CREATED="1470649099301" MODIFIED="1470649106906"/>
+<node TEXT="French" ID="ID_1049053078" CREATED="1470649107916" MODIFIED="1470649112462"/>
+</node>
+<node TEXT="Interface can adapted to device" ID="ID_309098070" CREATED="1470649146962" MODIFIED="1470649677009" HGAP_QUANTITY="15.5 pt" VSHIFT_QUANTITY="13.5 pt">
+<node TEXT="Keyboard" ID="ID_788645173" CREATED="1470649181562" MODIFIED="1470649233398"/>
+<node TEXT="Mouse" ID="ID_1526541662" CREATED="1470649200610" MODIFIED="1470649216168"/>
+<node TEXT="Touch devices" ID="ID_1532428428" CREATED="1470649217673" MODIFIED="1470649223792"/>
+</node>
+</node>
+</node>
+<node TEXT="Concept" LOCALIZED_STYLE_REF="AutomaticLayout.level,1" POSITION="left" ID="ID_660174434" CREATED="1470647490019" MODIFIED="1470650707144" HGAP_QUANTITY="50.0 pt" VSHIFT_QUANTITY="41.25 pt">
+<node TEXT="1. Create questions in the form of QCM. Group them by category / difficulty / language." ID="ID_1951488776" CREATED="1470647532214" MODIFIED="1470648168254"/>
+<node TEXT="2. Either store the qcm locally or in a central repository. In the latter case, the qcm can possibly be shared between users / groups" ID="ID_785269011" CREATED="1470647642798" MODIFIED="1470648168259"/>
+<node TEXT="3. Allow a user to identify himself/herself to the system. The user is allowed to either load local data or to connect to the global server to load shared data" ID="ID_1516439503" CREATED="1470647808449" MODIFIED="1470648168262"/>
+<node TEXT="4. Present the questions to a user and validate the answers. Questions / answers can contain text and/or multimedia" ID="ID_1292191248" CREATED="1470647725592" MODIFIED="1470648168265"/>
+<node TEXT="5. Compute the result and feed the history system. The user will be later allowed to view history / compute statistics" ID="ID_233845913" CREATED="1470647941251" MODIFIED="1470648168266"/>
+</node>
+<node TEXT="Tasks" LOCALIZED_STYLE_REF="AutomaticLayout.level,1" POSITION="right" ID="ID_1218591011" CREATED="1470649716605" MODIFIED="1470650628821" HGAP_QUANTITY="-1.0 pt" VSHIFT_QUANTITY="-578.25 pt">
+<node TEXT="Analysis" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_846386383" CREATED="1470649798859" MODIFIED="1470650615332" HGAP_QUANTITY="14.75 pt" VSHIFT_QUANTITY="-6.75 pt">
+<node TEXT="User stories" ID="ID_868043180" CREATED="1470649984744" MODIFIED="1470649990967"/>
+<node TEXT="Modules" ID="ID_675860457" CREATED="1470649997720" MODIFIED="1470650003719"/>
+<node TEXT="Identify hard points / prioritize" ID="ID_1224880308" CREATED="1470650005590" MODIFIED="1470650029269"/>
+</node>
+<node TEXT="Coding" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_801971551" CREATED="1470649808349" MODIFIED="1470650628820" HGAP_QUANTITY="17.75 pt" VSHIFT_QUANTITY="11.25 pt">
+<node TEXT="Data engines" ID="ID_1940020209" CREATED="1470649838108" MODIFIED="1470649857073"/>
+<node TEXT="Display engines" ID="ID_1798688656" CREATED="1470649860242" MODIFIED="1470649865404"/>
+<node TEXT="Statistics" ID="ID_1803837612" CREATED="1470649889120" MODIFIED="1470649896582"/>
+<node TEXT="History" ID="ID_237156468" CREATED="1470649897954" MODIFIED="1470649902397"/>
+<node TEXT="User / group profiles" ID="ID_1155973151" CREATED="1470649904797" MODIFIED="1470649912174"/>
+<node TEXT="Security" ID="ID_796363624" CREATED="1470649915579" MODIFIED="1470649919797"/>
+</node>
+<node TEXT="Test" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_597733069" CREATED="1470649813383" MODIFIED="1470650625396" HGAP_QUANTITY="13.25 pt" VSHIFT_QUANTITY="12.0 pt">
+<node TEXT="Unit testing" ID="ID_258144608" CREATED="1470649965074" MODIFIED="1470649970353"/>
+<node TEXT="Code review" ID="ID_854371547" CREATED="1470649971372" MODIFIED="1470649977949"/>
+</node>
+<node TEXT="Data" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_935928122" CREATED="1470649815866" MODIFIED="1470650621732" HGAP_QUANTITY="18.5 pt" VSHIFT_QUANTITY="15.0 pt">
+<node TEXT="Provide basic data for tests" ID="ID_896231555" CREATED="1470650035597" MODIFIED="1470650131140"/>
+<node TEXT="Feed the data engine with real data to build up a questions / answers base" ID="ID_125879651" CREATED="1470650063952" MODIFIED="1470650121250"/>
+</node>
+<node TEXT="Infrastructure" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_1711925934" CREATED="1470649926823" MODIFIED="1470650905690" HGAP_QUANTITY="10.25 pt" VSHIFT_QUANTITY="24.75 pt">
+<node TEXT="Test" ID="ID_1446834935" CREATED="1470650257635" MODIFIED="1470650645919">
+<node TEXT="Web server(s)" ID="ID_1074409678" CREATED="1470650223114" MODIFIED="1470650233573"/>
+<node TEXT="Device emulators" ID="ID_1861639239" CREATED="1470650353927" MODIFIED="1470650378696"/>
+<node TEXT="Clients" ID="ID_1231021821" CREATED="1470650379910" MODIFIED="1470650386169"/>
+<node TEXT="XML file structure . SQL Server" ID="ID_1532241043" CREATED="1470650859391" MODIFIED="1470650871081"/>
+</node>
+<node TEXT="Staging" ID="ID_1437295771" CREATED="1470650281062" MODIFIED="1470650898008" HGAP_QUANTITY="13.25 pt" VSHIFT_QUANTITY="8.25 pt">
+<node TEXT="Web servers" ID="ID_627531826" CREATED="1470650414236" MODIFIED="1470650417514"/>
+<node TEXT="Device emulators / real devices" ID="ID_1174201818" CREATED="1470650424721" MODIFIED="1470650437023"/>
+<node TEXT="Clients" ID="ID_841376574" CREATED="1470650438410" MODIFIED="1470650446437"/>
+<node TEXT="XML file structure . SQL Server" ID="ID_101523859" CREATED="1470650859391" MODIFIED="1470650871081"/>
+</node>
+<node TEXT="Production" ID="ID_1184927567" CREATED="1470650287377" MODIFIED="1470650905689" HGAP_QUANTITY="12.5 pt" VSHIFT_QUANTITY="9.0 pt">
+<node TEXT="Web servers" ID="ID_953958603" CREATED="1470650397290" MODIFIED="1470650401140"/>
+<node TEXT="Real devices" ID="ID_1298660425" CREATED="1470650461647" MODIFIED="1470650465854"/>
+<node TEXT="Clients" ID="ID_1638706439" CREATED="1470650467198" MODIFIED="1470650469801"/>
+<node TEXT="XML file structure . SQL Server" ID="ID_554719111" CREATED="1470650859391" MODIFIED="1470650871081"/>
+</node>
+<node TEXT="Security" ID="ID_1660849479" CREATED="1470650316347" MODIFIED="1470650903682" HGAP_QUANTITY="17.0 pt" VSHIFT_QUANTITY="12.0 pt">
+<node TEXT="Backup" ID="ID_850701990" CREATED="1470650296904" MODIFIED="1470650307199"/>
+<node TEXT="Access control" ID="ID_1719077865" CREATED="1470650332727" MODIFIED="1470650340616"/>
+<node TEXT="Logging" ID="ID_369622128" CREATED="1470650342405" MODIFIED="1470650346065"/>
+<node TEXT="Alerts" ID="ID_1300680482" CREATED="1470650347195" MODIFIED="1470650350431"/>
+</node>
+</node>
+</node>
+</node>
+</map>
