@@ -8,16 +8,22 @@ using BLTools.ConsoleExtension;
 using System.Xml.Linq;
 using System.IO;
 using System.Diagnostics;
+using System.ServiceModel;
+using System.Runtime.Serialization;
+
 
 namespace AskMeLib {
-  public class TChoiceCollection : TXmlBase {
+
+  [DataContract]
+  public partial class TChoiceCollection : TXmlBase, IChoiceCollection {
 
     #region --- XML constants ----------------------------------------------------------------------------------
     public const string XML_THIS_ELEMENT = "Choices"; 
     #endregion --- XML constants -------------------------------------------------------------------------------
 
     #region --- Public properties ------------------------------------------------------------------------------
-    public List<TChoice> Items { get; set; } = new List<TChoice>();
+    [DataMember]
+    public List<IChoice> Items { get; set; } = new List<IChoice>();
     #endregion --- Public properties ---------------------------------------------------------------------------
 
     #region --- Constructor(s) ---------------------------------------------------------------------------------

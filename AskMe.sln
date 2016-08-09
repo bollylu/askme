@@ -9,6 +9,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AskMeTestConsole", "AskMeTe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AskMeWebService", "AskMeWebService\AskMeWebService.csproj", "{C228E6C2-1DC9-41D5-9AA6-B712250F0281}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{5EE2B88A-7284-4D02-BD46-10E5D6A59F8B}"
+	ProjectSection(SolutionItems) = preProject
+		QCM system.mm = QCM system.mm
+		QCM system.pdf = QCM system.pdf
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

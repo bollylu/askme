@@ -21,12 +21,12 @@ namespace AskMeWebService {
 
           Host.Open();
 
-          ConsoleExtension.Pause();
+          ConsoleExtension.Pause($"The service is running at {BaseAddress.ToString()}");
 
           Host.Close();
         }
       } catch (Exception ex) {
-        ConsoleExtension.Pause($"Already active, exiting\n{ex.Message}");
+        ConsoleExtension.Pause(ex.Message);
       }
       Environment.Exit(0);
     }

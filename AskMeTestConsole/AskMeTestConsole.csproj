@@ -54,6 +54,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -63,7 +64,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IAskMeWeb.cs" />
+    <Compile Include="IAskMeWebService.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TAskMeWebService.cs" />
@@ -77,16 +78,6 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\AskMeLib\AskMeLib.csproj">
-      <Project>{a613aa8b-a067-4da2-910e-6f47804d2462}</Project>
-      <Name>AskMeLib</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\AskMeWebService\AskMeWebService.csproj">
-      <Project>{c228e6c2-1dc9-41d5-9aa6-b712250f0281}</Project>
-      <Name>AskMeWebService</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="data\questions.qcm">
@@ -104,6 +95,12 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AskMeLib\AskMeLib.csproj">
+      <Project>{a613aa8b-a067-4da2-910e-6f47804d2462}</Project>
+      <Name>AskMeLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -8,7 +8,6 @@ using AskMeLib;
 using BLTools;
 using BLTools.Debugging;
 using System.IO;
-using AskMeWebService;
 
 namespace AskMeTestConsole {
   class Program {
@@ -30,12 +29,12 @@ namespace AskMeTestConsole {
 
 
       if (Command == "load") {
-        using (TRepository Repository = new TRepository(RepositoryPath)) {
-          TQuestionFile TestFile = Repository.GetFile(DataFile);
+        using (AskMeWebServiceClient Client = new AskMeWebServiceClient()) {
+          TQuestionFile TestFile = Client.GetQuestionFile(DataFile);
           if (TestFile == null) {
             Usage($"Data file is missing or access is denied : {DataFile}");
           }
-          TestFile.ReadData();
+          //TestFile.ReadData();
           foreach (TQuestionCollection QuestionsItem in TestFile.Items) {
             QuestionsItem.Ask();
           }
@@ -45,9 +44,9 @@ namespace AskMeTestConsole {
       }
 
       if (Command == "list") {
-        AskMeWebClient Client = new AskMeWebClient();
+        AskMeWebServiceClient Client = new AskMeWebServiceClient();
 
-        Console.WriteLine(Client.GetContentList());
+        Console.WriteLine(Client.GetRepositoryList());
 
         //using (TRepository Repository = new TRepository(RepositoryPath)) {
         //  Console.WriteLine(Repository.GetContentList(Category, Language));

@@ -11,18 +11,12 @@ using System.Runtime.Serialization;
 namespace AskMeWebService {
 
   [ServiceContract]
-  public interface IAskMeWebGetContent {
+  public interface IAskMeWebService {
     [OperationContract]
-    string GetContentList();
+    string GetRepositoryList();
+  
+    [OperationContract]
+    IQuestionFile GetQuestionFile(string filename);
   }
 
-  [ServiceContract]
-  public interface IAskMeWebGetFile {
-    [OperationContract]
-    string GetFile(string filename);
-  }
-
-  public class TResponseFile {
-    public TQuestionFile Content;
-  }
 }

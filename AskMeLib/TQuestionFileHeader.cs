@@ -7,9 +7,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using BLTools;
+using System.ServiceModel;
+using System.Runtime.Serialization;
 
 namespace AskMeLib {
-  public class TQuestionFileHeader : TXmlBase {
+
+  [DataContract]
+  public partial class TQuestionFileHeader : TXmlBase, IQuestionFileHeader {
 
     #region --- XML constants ----------------------------------------------------------------------------------
     public const string XML_THIS_ELEMENT = "Header";
@@ -20,11 +24,14 @@ namespace AskMeLib {
     #endregion --- XML constants -------------------------------------------------------------------------------
 
     #region --- Public properties ------------------------------------------------------------------------------
+    [DataMember]
     public DateTime CreationTime { get; set; } = DateTime.MinValue;
+    [DataMember]
     public string CreatedBy { get; set; }
+    [DataMember]
     public string Language { get; set; } = "FR";
+    [DataMember]
     public string Category { get; set; } = "";
-    public List<TQuestionCollection> Items { get; set; } = new List<TQuestionCollection>();
     #endregion --- Public properties ---------------------------------------------------------------------------
 
     #region --- Constructor(s) ---------------------------------------------------------------------------------

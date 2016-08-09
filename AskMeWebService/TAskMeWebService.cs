@@ -7,17 +7,18 @@ using AskMeLib;
 using System.ServiceModel;
 
 namespace AskMeWebService {
-  public class TAskMeWebService : IAskMeWebGetContent, IAskMeWebGetFile {
+  public class TAskMeWebService : IAskMeWebService {
 
-    public string GetContentList() {
+    public string GetRepositoryList() {
       using (TRepository Repository = new TRepository(@"i:\testrepo")) {
         return Repository.GetContentList();
       }
     }
-    public string GetFile(string filename) {
+    public IQuestionFile GetQuestionFile(string filename) {
       using (TRepository Repository = new TRepository(@"i:\testrepo")) {
-        return ""; // Repository.GetFile(filename);
+        return Repository.GetFile(filename);
       }
     }
   }
+
 }

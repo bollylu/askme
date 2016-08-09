@@ -8,16 +8,21 @@ using BLTools.ConsoleExtension;
 using System.Xml.Linq;
 using System.IO;
 using System.Diagnostics;
+using System.ServiceModel;
+using System.Runtime.Serialization;
 
 namespace AskMeLib {
-  public class TQuestionCollection : TXmlBase {
+
+  [DataContract]
+  public partial class TQuestionCollection : TXmlBase, IQuestionCollection {
 
     #region --- XML constants ----------------------------------------------------------------------------------
     public const string XML_THIS_ELEMENT = "Questions";
     #endregion --- XML constants -------------------------------------------------------------------------------
 
     #region --- Properties ------------------------------------------------------------------------
-    public List<TQuestion> Items { get; set; } = new List<TQuestion>();
+    [DataMember]
+    public List<IQuestion> Items { get; set; } = new List<IQuestion>();
     public int Counter { get; set; }
     #endregion --- Properties ---------------------------------------------------------------------
 
@@ -25,10 +30,10 @@ namespace AskMeLib {
     public TQuestionCollection() : base() {
     }
 
-    public TQuestionCollection(string name, string description, IEnumerable<TQuestion> questions) : base() {
+    public TQuestionCollection(string name, string description, IEnumerable<IQuestion> questions) : base() {
       Name = name;
       Description = description;
-      foreach (TQuestion QuestionItem in questions) {
+      foreach (IQuestion QuestionItem in questions) {
         Items.Add(QuestionItem);
       }
     }
@@ -47,7 +52,7 @@ namespace AskMeLib {
       Console.WriteLine(Description);
       Console.WriteLine(new string('-', Description.Length));
 
-      foreach (TQuestion QuestionItem in Items) {
+      foreach (IQuestion QuestionItem in Items) {
         if (QuestionItem.Ask() == true) {
           Counter++;
           Console.WriteLine("La réponse est correcte !");

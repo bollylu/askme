@@ -36,6 +36,8 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -45,6 +47,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base classes\TXmlBase.cs" />
+    <Compile Include="Interfaces\IChoice.cs" />
+    <Compile Include="Interfaces\IChoiceCollection.cs" />
+    <Compile Include="Interfaces\IQuestion.cs" />
+    <Compile Include="Interfaces\IQuestionCollection.cs" />
+    <Compile Include="Interfaces\IQuestionFile.cs" />
+    <Compile Include="Interfaces\IQuestionFileHeader.cs" />
+    <Compile Include="Interfaces\IXmlBase.cs" />
     <Compile Include="TChoice.cs" />
     <Compile Include="TQuestion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

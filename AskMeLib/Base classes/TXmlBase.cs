@@ -5,9 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using System.ServiceModel;
+using System.Runtime.Serialization;
+
 
 namespace AskMeLib {
-  public class TXmlBase : IToXml {
+
+  [DataContract]
+  public partial class TXmlBase : IToXml {
 
     #region --- XML constants ----------------------------------------------------------------------------------
     public const string XML_ATTRIBUTE_NAME = "Name";
@@ -15,7 +20,9 @@ namespace AskMeLib {
     #endregion --- XML constants -------------------------------------------------------------------------------
 
     #region --- Public properties ------------------------------------------------------------------------------
+    [DataMember]
     public string Name { get; set; }
+    [DataMember]
     public string Description { get; set; }
     #endregion --- Public properties ---------------------------------------------------------------------------
 

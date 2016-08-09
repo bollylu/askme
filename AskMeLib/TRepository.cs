@@ -6,11 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace AskMeLib {
-  public class TRepository : TXmlBase, IDisposable {
+  public partial class TRepository : TXmlBase, IDisposable {
 
     #region --- Public properties -----------------------------------------------------------------
     public string Location { get; set; }
-    public List<TQuestionFile> Items { get; set; } = new List<TQuestionFile>();
+    public List<IQuestionFile> Items { get; set; } = new List<IQuestionFile>();
 
     public bool IsInvalid {
       get {
@@ -45,7 +45,7 @@ namespace AskMeLib {
     }
     #endregion --- Converters ---------------------------------------------------------------------
 
-    public virtual List<TQuestionFile> GetContent(string category = "", string language = "", bool recurse = false) {
+    public virtual List<IQuestionFile> GetContent(string category = "", string language = "", bool recurse = false) {
       Items.Clear();
 
       #region === Validate parameters ===
@@ -61,28 +61,29 @@ namespace AskMeLib {
         Files = Directory.GetFiles(Location, $"*{TQuestionFile.QUESTION_FILE_EXTENSION}", SearchOption.AllDirectories);
       }
       foreach (string FileItem in Files) {
-        TQuestionFile TempQuestionFile = new TQuestionFile(FileItem);
+        IQuestionFile TempQuestionFile = new TQuestionFile(FileItem);
         if ((category == "" || TempQuestionFile.Header.Category.ToLower().Contains(category.ToLower()))
-          && (language == "" || TempQuestionFile.IsLanguageOk(language))) {
+          && (language == "" || TempQuestionFile.IsLanguageMatching(language))) {
           Items.Add(TempQuestionFile);
         }
       }
       return Items;
 
     }
-    public string GetContentList(string category = "", string language = "", bool recurse = false) {
+
+    public virtual string GetContentList(string category = "", string language = "", bool recurse = false) {
       StringBuilder RetVal = new StringBuilder();
-      IEnumerable<TQuestionFile> Content = GetContent(category, language, recurse);
+      IEnumerable<IQuestionFile> Content = GetContent(category, language, recurse);
       if (Content == null || Content.Count() == 0) {
         return "";
       }
-      foreach (TQuestionFile QuestionFileItem in Content) {
+      foreach (IQuestionFile QuestionFileItem in Content) {
         RetVal.AppendLine(QuestionFileItem.GetHeaderTextWithDetails());
       }
       return RetVal.ToString();
     }
 
-    public virtual TQuestionFile GetFile(string filename) {
+    public virtual IQuestionFile GetFile(string filename) {
       #region === Validate parameters ===
       if (IsInvalid) {
         return null;

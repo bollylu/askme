@@ -6,10 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using System.ServiceModel;
+using System.Runtime.Serialization;
 
 namespace AskMeLib {
-  [Serializable]
-  public class TQuestionFile : TXmlBase, IDisposable {
+
+  [DataContract]
+  public partial class TQuestionFile : TXmlBase, IDisposable, IQuestionFile {
 
     #region --- XML constants ----------------------------------------------------------------------------------
     public const string XML_THIS_ELEMENT = "root";
@@ -20,9 +23,11 @@ namespace AskMeLib {
 
     #region --- Public properties ------------------------------------------------------------------------------
     public string Location { get; set; }
+    [DataMember]
     public List<TQuestionCollection> Items { get; set; } = new List<TQuestionCollection>();
 
-    public TQuestionFileHeader Header {
+    [DataMember]
+    public IQuestionFileHeader Header {
       get {
         if (_Header == null) {
           _Header = ReadHeader();
@@ -33,7 +38,7 @@ namespace AskMeLib {
         _Header = null;
       }
     }
-    protected TQuestionFileHeader _Header;
+    protected IQuestionFileHeader _Header;
     #endregion --- Public properties ---------------------------------------------------------------------------
 
     #region --- Constructor(s) --------------------------------------------------------------------
@@ -83,7 +88,7 @@ namespace AskMeLib {
       }
     }
 
-    public TQuestionFileHeader ReadHeader(string location = "") {
+    public IQuestionFileHeader ReadHeader(string location = "") {
       #region Validate parameters
       if (location != "") {
         Location = location;
@@ -118,7 +123,7 @@ namespace AskMeLib {
       return RetVal.ToString();
     }
 
-    public bool IsLanguageOk(string language = "") {
+    public bool IsLanguageMatching(string language = "") {
       #region === Validate parameters ===
       if (Header == null) {
         return false;

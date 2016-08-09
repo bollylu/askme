@@ -6,9 +6,13 @@ using System.Threading.Tasks;
 using BLTools;
 using System.Xml.Linq;
 using BLTools.Text;
+using System.ServiceModel;
+using System.Runtime.Serialization;
 
 namespace AskMeLib {
-  public class TQuestion : TXmlBase {
+
+  [DataContract]
+  public partial class TQuestion : TXmlBase, IQuestion {
 
     #region --- XML constants ----------------------------------------------------------------------------------
     public const string XML_THIS_ELEMENT = "Question";
@@ -16,8 +20,10 @@ namespace AskMeLib {
     #endregion --- XML constants -------------------------------------------------------------------------------
 
     #region --- Public properties ------------------------------------------------------------------------------
+    [DataMember]
     public string QuestionType { get; set; }
-    public TChoiceCollection Choices { get; set; } = new TChoiceCollection();
+    [DataMember]
+    public IChoiceCollection Choices { get; set; } = new TChoiceCollection();
     public int CurrentChoice { get; set; } 
     #endregion --- Public properties ---------------------------------------------------------------------------
 

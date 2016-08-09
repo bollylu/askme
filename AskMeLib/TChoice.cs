@@ -5,9 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using BLTools;
 using System.Xml.Linq;
+using System.ServiceModel;
+using System.Runtime.Serialization;
+
 
 namespace AskMeLib {
-  public class TChoice : TXmlBase {
+
+  [DataContract]
+  public partial class TChoice : TXmlBase, IChoice {
 
     #region --- XML constants ----------------------------------------------------------------------------------
     public const string XML_THIS_ELEMENT = "Choice";
@@ -15,6 +20,7 @@ namespace AskMeLib {
     #endregion --- XML constants -------------------------------------------------------------------------------
 
     #region --- Public properties ------------------------------------------------------------------------------
+    [DataMember]
     public bool IsCorrect { get; set; } = false;
     #endregion --- Public properties ---------------------------------------------------------------------------
 
