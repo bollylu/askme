@@ -16,7 +16,7 @@ namespace AskMeWebService {
     string GetRepositoryList();
   
     [OperationContract]
-    IQuestionFile GetQuestionFile(string filename);
+    TQuestionFileWCF GetQuestionFile(string filename);
   }
 
 }

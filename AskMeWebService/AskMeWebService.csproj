@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>AskMeWebService</RootNamespace>
     <AssemblyName>AskMeWebService</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
@@ -40,6 +40,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -53,6 +54,13 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TAskMeWebService.cs" />
+    <Compile Include="TChoiceWCF.cs" />
+    <Compile Include="TChoiceCollectionWCF.cs" />
+    <Compile Include="TQuestionWCF.cs" />
+    <Compile Include="TQuestionCollection.cs" />
+    <Compile Include="TQuestionFileWCF.cs" />
+    <Compile Include="TQuestionFileHeader.cs" />
+    <Compile Include="TXmlBaseWCF.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

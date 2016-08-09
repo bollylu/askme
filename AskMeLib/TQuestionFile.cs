@@ -11,22 +11,18 @@ using System.Runtime.Serialization;
 
 namespace AskMeLib {
 
-  [DataContract]
   public partial class TQuestionFile : TXmlBase, IDisposable, IQuestionFile {
 
     #region --- XML constants ----------------------------------------------------------------------------------
     public const string XML_THIS_ELEMENT = "root";
     #endregion --- XML constants -------------------------------------------------------------------------------
 
-
     public const string QUESTION_FILE_EXTENSION = ".qcm";
 
     #region --- Public properties ------------------------------------------------------------------------------
     public string Location { get; set; }
-    [DataMember]
     public List<TQuestionCollection> Items { get; set; } = new List<TQuestionCollection>();
 
-    [DataMember]
     public IQuestionFileHeader Header {
       get {
         if (_Header == null) {
@@ -45,6 +41,17 @@ namespace AskMeLib {
     public TQuestionFile(string location) : base() {
       Location = location;
     }
+
+    public TQuestionFile(IQuestionFile questionFile) : base(questionFile) {
+      if (questionFile == null) {
+        return;
+      }
+      Location = questionFile.Location;
+      foreach(IQuestionCollection QuestionCollectionItem in questionFile.Items) {
+        Items.Add(new TQuestionCollection(QuestionCollectionItem));
+      }
+    }
+
     public void Dispose() {
       Items.Clear();
     }

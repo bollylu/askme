@@ -13,7 +13,6 @@ using System.Runtime.Serialization;
 
 namespace AskMeLib {
 
-  [DataContract]
   public partial class TQuestionCollection : TXmlBase, IQuestionCollection {
 
     #region --- XML constants ----------------------------------------------------------------------------------
@@ -21,7 +20,6 @@ namespace AskMeLib {
     #endregion --- XML constants -------------------------------------------------------------------------------
 
     #region --- Properties ------------------------------------------------------------------------
-    [DataMember]
     public List<IQuestion> Items { get; set; } = new List<IQuestion>();
     public int Counter { get; set; }
     #endregion --- Properties ---------------------------------------------------------------------
@@ -43,6 +41,13 @@ namespace AskMeLib {
           Items.Add(new TQuestion(QuestionItem));
         }
       }
+    }
+
+    public TQuestionCollection(IQuestionCollection questionCollection) : base(questionCollection) {
+      foreach (IQuestion QuestionItem in questionCollection.Items) {
+        Items.Add(QuestionItem);
+      }
+      Counter = questionCollection.Counter;
     }
     #endregion --- Constructeurs ------------------------------------------------------------------
 

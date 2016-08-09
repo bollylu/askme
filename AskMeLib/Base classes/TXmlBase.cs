@@ -11,7 +11,6 @@ using System.Runtime.Serialization;
 
 namespace AskMeLib {
 
-  [DataContract]
   public partial class TXmlBase : IToXml {
 
     #region --- XML constants ----------------------------------------------------------------------------------
@@ -20,9 +19,7 @@ namespace AskMeLib {
     #endregion --- XML constants -------------------------------------------------------------------------------
 
     #region --- Public properties ------------------------------------------------------------------------------
-    [DataMember]
     public string Name { get; set; }
-    [DataMember]
     public string Description { get; set; }
     #endregion --- Public properties ---------------------------------------------------------------------------
 
@@ -36,6 +33,11 @@ namespace AskMeLib {
     public TXmlBase(XElement element) {
       Name = element.SafeReadAttribute<string>(XML_ATTRIBUTE_NAME, "");
       Description = element.SafeReadAttribute<string>(XML_ATTRIBUTE_DESCRIPTION, "");
+    }
+
+    public TXmlBase(IXmlBase xmlBase) {
+      Name = xmlBase.Name;
+      Description = xmlBase.Description;
     }
     #endregion --- Constructor(s) ------------------------------------------------------------------------------
 

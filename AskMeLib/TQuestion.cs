@@ -11,7 +11,6 @@ using System.Runtime.Serialization;
 
 namespace AskMeLib {
 
-  [DataContract]
   public partial class TQuestion : TXmlBase, IQuestion {
 
     #region --- XML constants ----------------------------------------------------------------------------------
@@ -20,9 +19,7 @@ namespace AskMeLib {
     #endregion --- XML constants -------------------------------------------------------------------------------
 
     #region --- Public properties ------------------------------------------------------------------------------
-    [DataMember]
     public string QuestionType { get; set; }
-    [DataMember]
     public IChoiceCollection Choices { get; set; } = new TChoiceCollection();
     public int CurrentChoice { get; set; } 
     #endregion --- Public properties ---------------------------------------------------------------------------

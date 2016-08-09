@@ -8,6 +8,7 @@ using AskMeLib;
 using BLTools;
 using BLTools.Debugging;
 using System.IO;
+using AskMeWebService;
 
 namespace AskMeTestConsole {
   class Program {
@@ -16,6 +17,8 @@ namespace AskMeTestConsole {
       SplitArgs Args = new SplitArgs(args);
 
       TraceFactory.AddTraceConsole();
+      TraceFactory.AddTraceDefaultLogFilename();
+      ApplicationInfo.ApplicationStart();
 
       if (Args.IsDefined("help") || Args.IsDefined("?")) {
         Usage();
@@ -30,7 +33,8 @@ namespace AskMeTestConsole {
 
       if (Command == "load") {
         using (AskMeWebServiceClient Client = new AskMeWebServiceClient()) {
-          TQuestionFile TestFile = Client.GetQuestionFile(DataFile);
+          TQuestionFileWCF TempFile = Client.GetQuestionFile(DataFile);
+          IQuestionFile TestFile = new TQuestionFile(TempFile as IQuestionFile);
           if (TestFile == null) {
             Usage($"Data file is missing or access is denied : {DataFile}");
           }

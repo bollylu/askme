@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AskMeLib;
 using System.ServiceModel;
+using System.Diagnostics;
 
 namespace AskMeWebService {
   public class TAskMeWebService : IAskMeWebService {
@@ -14,9 +15,18 @@ namespace AskMeWebService {
         return Repository.GetContentList();
       }
     }
-    public IQuestionFile GetQuestionFile(string filename) {
+    public TQuestionFileWCF GetQuestionFile(string filename) {
+      Trace.WriteLine($"Requesting {filename}");
+
       using (TRepository Repository = new TRepository(@"i:\testrepo")) {
-        return Repository.GetFile(filename);
+        IQuestionFile TempFile = Repository.GetFile(filename);
+        if (TempFile == null) {
+          Trace.WriteLine($"File not found or access denied : {TempFile.ToString()}");
+          return null;
+        }
+        TQuestionFileWCF RetVal = new TQuestionFileWCF(TempFile);
+        Trace.WriteLine($"Returning {RetVal.ToString()}");
+        return RetVal;
       }
     }
   }

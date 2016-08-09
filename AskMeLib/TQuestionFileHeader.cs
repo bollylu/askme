@@ -12,7 +12,6 @@ using System.Runtime.Serialization;
 
 namespace AskMeLib {
 
-  [DataContract]
   public partial class TQuestionFileHeader : TXmlBase, IQuestionFileHeader {
 
     #region --- XML constants ----------------------------------------------------------------------------------
@@ -24,13 +23,9 @@ namespace AskMeLib {
     #endregion --- XML constants -------------------------------------------------------------------------------
 
     #region --- Public properties ------------------------------------------------------------------------------
-    [DataMember]
     public DateTime CreationTime { get; set; } = DateTime.MinValue;
-    [DataMember]
     public string CreatedBy { get; set; }
-    [DataMember]
     public string Language { get; set; } = "FR";
-    [DataMember]
     public string Category { get; set; } = "";
     #endregion --- Public properties ---------------------------------------------------------------------------
 

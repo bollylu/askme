@@ -6,10 +6,15 @@ using System.Threading.Tasks;
 using System.ServiceModel;
 using System.ServiceModel.Description;
 using BLTools.ConsoleExtension;
+using BLTools.Debugging;
 
 namespace AskMeWebService {
   class Program {
     static void Main(string[] args) {
+
+      TraceFactory.AddTraceConsole();
+      TraceFactory.AddTraceDefaultLogFilename();
+      ApplicationInfo.ApplicationStart();
 
       Uri BaseAddress = new Uri("http://10.100.200.252:8888/askme");
       try {
