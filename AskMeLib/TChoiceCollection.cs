@@ -32,8 +32,10 @@ namespace AskMeLib {
       if (element.Name != XName.Get(XML_THIS_ELEMENT)) {
         return;
       }
-      foreach (XElement ChoiceItem in element.Elements(TChoice.XML_THIS_ELEMENT)) {
-        Items.Add(new TChoice(ChoiceItem));
+      if (element.Elements(TChoice.XML_THIS_ELEMENT).Count() > 0) {
+        foreach (XElement ChoiceItem in element.Elements(TChoice.XML_THIS_ELEMENT)) {
+          Items.Add(new TChoice(ChoiceItem));
+        }
       }
     } 
     #endregion --- Constructor(s) ------------------------------------------------------------------------------
