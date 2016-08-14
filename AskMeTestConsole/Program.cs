@@ -42,7 +42,7 @@ namespace AskMeTestConsole {
           foreach (TQuestionCollection QuestionsItem in TestFile.Items) {
             QuestionsItem.Ask();
           }
-          ConsoleExtension.Pause(1000);
+          ConsoleExtension.Pause(100);
         }
 
       }
