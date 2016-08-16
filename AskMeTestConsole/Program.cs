@@ -9,6 +9,7 @@ using BLTools;
 using BLTools.Debugging;
 using System.IO;
 using AskMeWebService;
+using System.Diagnostics;
 
 namespace AskMeTestConsole {
   class Program {
@@ -20,10 +21,15 @@ namespace AskMeTestConsole {
       TraceFactory.AddTraceDefaultLogFilename();
       ApplicationInfo.ApplicationStart();
 
+      TNotificationBase.OnNotifyProgress += (o, e) => {
+        Trace.Write(e.Message, Severity.GetSeverity((ErrorLevel)e.Result));
+      };
+
       if (Args.IsDefined("help") || Args.IsDefined("?")) {
         Usage();
       }
 
+      Notifyer.NotifyProgress("Reading parameters...");
       string RepositoryPath = Args.GetValue<string>("repository", @".\");
       string Command = Args.GetValue<string>("command", "list");
       string DataFile = Args.GetValue<string>("file", "");
@@ -32,6 +38,7 @@ namespace AskMeTestConsole {
 
 
       if (Command == "load") {
+        Notifyer.NotifyProgress("Command is LOAD");
         using (AskMeWebServiceClient Client = new AskMeWebServiceClient()) {
           TQuestionFileWCF TempFile = Client.GetQuestionFile(DataFile);
           IQuestionFile TestFile = new TQuestionFile(TempFile as IQuestionFile);
@@ -48,6 +55,7 @@ namespace AskMeTestConsole {
       }
 
       if (Command == "list") {
+        Notifyer.NotifyProgress("Command is LIST");
         AskMeWebServiceClient Client = new AskMeWebServiceClient();
 
         Console.WriteLine(Client.GetRepositoryList());
@@ -62,6 +70,7 @@ namespace AskMeTestConsole {
 
     static void Usage(string message = "") {
       if (message != "") {
+        Notifyer.NotifyError(message);
         Console.WriteLine(message);
       }
       Console.WriteLine($@"AskMe v{"0.1"}");

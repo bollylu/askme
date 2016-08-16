@@ -11,7 +11,7 @@ using System.Runtime.Serialization;
 
 namespace AskMeLib {
 
-  public partial class TXmlBase : IToXml {
+  public partial class TXmlBase : TNotificationBase, IToXml {
 
     #region --- XML constants ----------------------------------------------------------------------------------
     public const string XML_ATTRIBUTE_NAME = "Name";
@@ -22,7 +22,6 @@ namespace AskMeLib {
     public string Name { get; set; }
     public string Description { get; set; }
     #endregion --- Public properties ---------------------------------------------------------------------------
-
 
     #region --- Constructor(s) ---------------------------------------------------------------------------------
     public TXmlBase() {
@@ -43,16 +42,20 @@ namespace AskMeLib {
 
     #region --- Converters -------------------------------------------------------------------------------------
     public virtual XElement ToXml() {
-      return null;
+      throw new NotImplementedException();
     }
 
     public virtual XElement ToXml(string name) {
       XElement RetVal = new XElement(name);
+      RetVal.SetAttributeValue(XML_ATTRIBUTE_NAME, Name);
+      RetVal.SetAttributeValue(XML_ATTRIBUTE_DESCRIPTION, Description);
       return RetVal;
     }
 
     public virtual XElement ToXml(XName name) {
       XElement RetVal = new XElement(name);
+      RetVal.SetAttributeValue(XML_ATTRIBUTE_NAME, Name);
+      RetVal.SetAttributeValue(XML_ATTRIBUTE_DESCRIPTION, Description);
       return RetVal;
     } 
     #endregion --- Converters -------------------------------------------------------------------------------------

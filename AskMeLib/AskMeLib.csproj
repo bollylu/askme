@@ -31,8 +31,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BLTools.45, Version=2.451.6053.29228, Culture=neutral, PublicKeyToken=42a294c809db3b02, processorArchitecture=MSIL">
-      <HintPath>..\packages\BLTools.45.2.451.6053.29228\lib\net45\BLTools.45.dll</HintPath>
+    <Reference Include="BLTools.45, Version=2.451.6072.25800, Culture=neutral, PublicKeyToken=42a294c809db3b02, processorArchitecture=MSIL">
+      <HintPath>..\packages\BLTools.45.2.451.6072.25800\lib\net45\BLTools.45.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base classes\TNotificationBase.cs" />
     <Compile Include="Base classes\TXmlBase.cs" />
     <Compile Include="Interfaces\IChoice.cs" />
     <Compile Include="Interfaces\IChoiceCollection.cs" />
