@@ -20,7 +20,7 @@ namespace AskMeLib {
     public const string QUESTION_FILE_EXTENSION = ".qcm";
 
     #region --- Public properties ------------------------------------------------------------------------------
-    public string Location { get; set; }
+    
     public List<TQuestionCollection> Items { get; set; } = new List<TQuestionCollection>();
 
     public IQuestionFileHeader Header {

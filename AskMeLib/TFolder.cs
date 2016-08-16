@@ -6,17 +6,23 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace AskMeLib {
-  public partial class TRepository : TXmlBase, IDisposable {
+  public partial class TFolder : TXmlBase, IDisposable, IFolder {
 
     #region --- Public properties -----------------------------------------------------------------
+    public string Location { get; set; }
+    public IFolderHeader Header { get; set; }
+    public List<IQuestionFile> Items { get; set; } = new List<IQuestionFile>();
     public List<IFolder> SubFolders { get; set; } = new List<IFolder>();
 
     public bool IsInvalid {
       get {
-        if (string.IsNullOrWhiteSpace(StorageLocation)) {
+        if (string.IsNullOrWhiteSpace(Location)) {
           return true;
         }
-        if (!Directory.Exists(StorageLocation)) {
+        if (!Directory.Exists(Location)) {
+          return true;
+        }
+        if (Header == null) {
           return true;
         }
         return false;
@@ -25,8 +31,8 @@ namespace AskMeLib {
     #endregion --- Public properties --------------------------------------------------------------
 
     #region --- Constructor(s) --------------------------------------------------------------------
-    public TRepository(string location) : base() {
-      StorageLocation = location;
+    public TFolder(string location) : base() {
+      Location = location;
     }
 
     public void Dispose() {
@@ -37,39 +43,42 @@ namespace AskMeLib {
     #region --- Converters ------------------------------------------------------------------------
     public override string ToString() {
       StringBuilder RetVal = new StringBuilder();
-      foreach (IFolder FolderItem in SubFolders) {
-        RetVal.AppendLine(FolderItem.ToString());
+      foreach (TQuestionFile QuestionFileItem in Items) {
+        RetVal.AppendLine(QuestionFileItem.ToString());
       }
       return RetVal.ToString();
     }
     #endregion --- Converters ---------------------------------------------------------------------
 
-    public virtual List<IFolder> GetContent(string category = "", string language = "", bool recurse = false) {
-      SubFolders.Clear();
-
+    public virtual TFolderHeader GetContentHeader(bool recurse = false) {
       #region === Validate parameters ===
       if (IsInvalid) {
         return null;
       }
       #endregion === Validate parameters ===
 
-      string[] Folders;
-      Folders = Directory.GetDirectories(StorageLocation);
-      foreach (string FolderItem in Folders) {
-        TFolder Folder = new TFolder(FolderItem);
-        TFolderHeader Header = Folder.GetHeader();
-        if ((category == "" || Header.Category.ToLower().Contains(category.ToLower()))
-          && (language == "" || Header.IsLanguageMatching(language))) {
-          SubFolders.Add(Folder);
+      TFolderHeader RetVal = new TFolderHeader();
+
+      string[] Files;
+      if (recurse) {
+        Files = Directory.GetFiles(Location, $"*{TQuestionFile.QUESTION_FILE_EXTENSION}", SearchOption.TopDirectoryOnly);
+      } else {
+        Files = Directory.GetFiles(Location, $"*{TQuestionFile.QUESTION_FILE_EXTENSION}", SearchOption.AllDirectories);
+      }
+      foreach (string FileItem in Files) {
+        IQuestionFile TempQuestionFile = new TQuestionFile(FileItem);
+        if ((category == "" || TempQuestionFile.Header.Category.ToLower().Contains(category.ToLower()))
+          && (language == "" || TempQuestionFile.IsLanguageMatching(language))) {
+          Items.Add(TempQuestionFile);
         }
       }
-      return SubFolders;
+      return Items;
 
     }
 
     public virtual string GetContentList(string category = "", string language = "", bool recurse = false) {
       StringBuilder RetVal = new StringBuilder();
-      IEnumerable<IFolder> Content = GetContent(category, language, recurse);
+      IEnumerable<IQuestionFile> Content = GetContent(category, language, recurse);
       if (Content == null || Content.Count() == 0) {
         return "";
       }
@@ -85,7 +94,7 @@ namespace AskMeLib {
         return null;
       }
       #endregion === Validate parameters ===
-      string RealFilePath = Directory.GetFiles(StorageLocation, $"{filename}{TQuestionFile.QUESTION_FILE_EXTENSION}", SearchOption.AllDirectories).FirstOrDefault();
+      string RealFilePath = Directory.GetFiles(Location, $"{filename}{TQuestionFile.QUESTION_FILE_EXTENSION}", SearchOption.AllDirectories).FirstOrDefault();
       if (RealFilePath == null) {
         return null;
       }

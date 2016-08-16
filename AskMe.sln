@@ -11,6 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AskMeWebService", "AskMeWeb
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{5EE2B88A-7284-4D02-BD46-10E5D6A59F8B}"
 	ProjectSection(SolutionItems) = preProject
+		Documentation\AskMe.mm = Documentation\AskMe.mm
 		Documentation\QCM system.mm = Documentation\QCM system.mm
 		Documentation\QCM system.pdf = Documentation\QCM system.pdf
 	EndProjectSection
