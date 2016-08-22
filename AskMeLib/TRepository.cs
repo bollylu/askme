@@ -1,15 +1,25 @@
-﻿using System;
+﻿using BLTools;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace AskMeLib {
   public partial class TRepository : TXmlBase, IDisposable {
 
+    public const string REPOSITORY_HEADER_FILENAME = "repository.xml";
+    public const string XML_THIS_ELEMENT = "Repository";
+    public const string XML_ATTRIBUTE_QCM_FOLDER = "QcmFolder";
+    public const string XML_ATTRIBUTE_DESC_FOLDER = "DescFolder";
+
     #region --- Public properties -----------------------------------------------------------------
-    public List<IFolder> SubFolders { get; set; } = new List<IFolder>();
+    public string DataFolder { get; set; }
+    public string DescFolder { get; set; }
+
+    public List<IQuestionFile> QFiles { get; set; } = new List<IQuestionFile>();
 
     public bool IsInvalid {
       get {
@@ -25,45 +35,62 @@ namespace AskMeLib {
     #endregion --- Public properties --------------------------------------------------------------
 
     #region --- Constructor(s) --------------------------------------------------------------------
-    public TRepository(string location) : base() {
-      StorageLocation = location;
+    public TRepository(string folder) : base() {
+      StorageLocation = Path.Combine(folder, REPOSITORY_HEADER_FILENAME);
     }
 
     public void Dispose() {
-      Items.Clear();
+      QFiles.Clear();
     }
     #endregion --- Constructor(s) -----------------------------------------------------------------
 
     #region --- Converters ------------------------------------------------------------------------
     public override string ToString() {
       StringBuilder RetVal = new StringBuilder();
-      foreach (IFolder FolderItem in SubFolders) {
-        RetVal.AppendLine(FolderItem.ToString());
-      }
+      RetVal.AppendLine($"Name = {Name}");
+      RetVal.AppendLine($", Description = {Description}");
+      RetVal.AppendLine($", Content = {QFiles.Count()} files");
       return RetVal.ToString();
     }
     #endregion --- Converters ---------------------------------------------------------------------
 
-    public virtual List<IFolder> GetContent(string category = "", string language = "", bool recurse = false) {
-      SubFolders.Clear();
-
-      #region === Validate parameters ===
+    public bool Open() {
       if (IsInvalid) {
-        return null;
+        return false;
       }
-      #endregion === Validate parameters ===
 
-      string[] Folders;
-      Folders = Directory.GetDirectories(StorageLocation);
-      foreach (string FolderItem in Folders) {
-        TFolder Folder = new TFolder(FolderItem);
-        TFolderHeader Header = Folder.GetHeader();
-        if ((category == "" || Header.Category.ToLower().Contains(category.ToLower()))
-          && (language == "" || Header.IsLanguageMatching(language))) {
-          SubFolders.Add(Folder);
+      XElement Header = LoadXml();
+      if (Header == null) {
+        return false;
+      }
+
+      Name = Header.SafeReadAttribute<string>(XML_ATTRIBUTE_NAME, "");
+      Description = Header.SafeReadAttribute<string>(XML_ATTRIBUTE_DESCRIPTION, "");
+      DataFolder = Header.SafeReadAttribute<string>(XML_ATTRIBUTE_QCM_FOLDER, "");
+      DescFolder = Header.SafeReadAttribute<String>(XML_ATTRIBUTE_DESC_FOLDER, "");
+
+      return true;
+    }
+
+
+    public virtual List<IQuestionFile> GetContent(string category = "", string language = "", bool recurse = false) {
+      QFiles.Clear();
+
+      if (string.IsNullOrWhiteSpace(DataFolder)) {
+        return QFiles;
+      }
+      if (!Directory.Exists(DataFolder)) {
+        return QFiles;
+      }
+
+      foreach (string FileItem in Directory.GetFiles(DataFolder, TQuestionFile.QUESTION_FILE_EXTENSION, SearchOption.AllDirectories)) {
+        TQuestionFile TempFile = new TQuestionFile(FileItem);
+        if ((category == "" || TempFile.Header.Category.ToLower().Contains(category.ToLower()))
+          && (language == "" || TempFile.Header.IsLanguageMatching(language))) {
+          QFiles.Add(TempFile);
         }
       }
-      return SubFolders;
+      return QFiles;
 
     }
 
