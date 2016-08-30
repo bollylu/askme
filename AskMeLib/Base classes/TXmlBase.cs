@@ -86,19 +86,23 @@ namespace AskMeLib {
     }
 
     public virtual XElement LoadXml(string storageLocation = "") {
+      string CurrentStorageLocation;
       #region Validate parameters
       if (!string.IsNullOrWhiteSpace(storageLocation)) {
-        StorageLocation = storageLocation;
+        CurrentStorageLocation = storageLocation;
+      } else {
+        CurrentStorageLocation = StorageLocation;
       }
-      if (!File.Exists(StorageLocation)) {
-        NotifyError($"Unable to read information from file {StorageLocation} : incorrect or missing filename", ErrorLevel.Error);
+
+      if (!File.Exists(CurrentStorageLocation)) {
+        NotifyError($"Unable to read information from file {CurrentStorageLocation} : incorrect or missing filename", ErrorLevel.Error);
         return null;
       }
       #endregion Validate parameters
       XDocument XmlFile;
       try {
         NotifyProgress("Reading file content...");
-        XmlFile = XDocument.Load(StorageLocation);
+        XmlFile = XDocument.Load(CurrentStorageLocation);
 
         NotifyProgress("Parsing content...");
         XElement Root = XmlFile.Root;
@@ -110,7 +114,7 @@ namespace AskMeLib {
         NotifyProgress("LoadXml Sucessfull");
         return Root;
       } catch (Exception ex) {
-        NotifyError($"Unable to read information from file {StorageLocation} : {ex.Message}", ErrorLevel.Error);
+        NotifyError($"Unable to read information from file {CurrentStorageLocation} : {ex.Message}", ErrorLevel.Error);
         NotifyProgress("LoadXml failed");
         return null;
       }

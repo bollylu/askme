@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 
 namespace AskMeLib {
-  public partial class TRepository : TXmlBase, IDisposable {
+  public partial class TRepository : TXmlBase, IRepository {
 
     public const string REPOSITORY_HEADER_FILENAME = "repository.xml";
     public const string XML_THIS_ELEMENT = "Repository";
@@ -16,6 +16,7 @@ namespace AskMeLib {
     public const string XML_ATTRIBUTE_DESC_FOLDER = "DescFolder";
 
     #region --- Public properties -----------------------------------------------------------------
+    public string HeaderLocation { get; private set; }
     public string DataFolder { get; set; }
     public string DescFolder { get; set; }
 
@@ -36,7 +37,8 @@ namespace AskMeLib {
 
     #region --- Constructor(s) --------------------------------------------------------------------
     public TRepository(string folder) : base() {
-      StorageLocation = Path.Combine(folder, REPOSITORY_HEADER_FILENAME);
+      StorageLocation = folder;
+      HeaderLocation = Path.Combine(folder, REPOSITORY_HEADER_FILENAME);
     }
 
     public void Dispose() {
@@ -47,9 +49,11 @@ namespace AskMeLib {
     #region --- Converters ------------------------------------------------------------------------
     public override string ToString() {
       StringBuilder RetVal = new StringBuilder();
-      RetVal.AppendLine($"Name = {Name}");
-      RetVal.AppendLine($", Description = {Description}");
-      RetVal.AppendLine($", Content = {QFiles.Count()} files");
+      RetVal.Append($"Name = {Name}");
+      RetVal.Append($", Description = {Description}");
+      RetVal.Append($", Data = {DataFolder}");
+      RetVal.Append($", Rich = {DescFolder}");
+      RetVal.Append($", Content = {QFiles.Count()} files");
       return RetVal.ToString();
     }
     #endregion --- Converters ---------------------------------------------------------------------
@@ -59,19 +63,22 @@ namespace AskMeLib {
         return false;
       }
 
-      XElement Header = LoadXml();
-      if (Header == null) {
+      try {
+        XElement Header = LoadXml(HeaderLocation).SafeReadElement(TRepository.XML_THIS_ELEMENT);
+        if (Header == null) {
+          return false;
+        }
+
+        Name = Header.SafeReadAttribute<string>(XML_ATTRIBUTE_NAME, "");
+        Description = Header.SafeReadAttribute<string>(XML_ATTRIBUTE_DESCRIPTION, "");
+        DataFolder = Header.SafeReadAttribute<string>(XML_ATTRIBUTE_QCM_FOLDER, "");
+        DescFolder = Header.SafeReadAttribute<String>(XML_ATTRIBUTE_DESC_FOLDER, "");
+
+        return true;
+      } catch {
         return false;
       }
-
-      Name = Header.SafeReadAttribute<string>(XML_ATTRIBUTE_NAME, "");
-      Description = Header.SafeReadAttribute<string>(XML_ATTRIBUTE_DESCRIPTION, "");
-      DataFolder = Header.SafeReadAttribute<string>(XML_ATTRIBUTE_QCM_FOLDER, "");
-      DescFolder = Header.SafeReadAttribute<String>(XML_ATTRIBUTE_DESC_FOLDER, "");
-
-      return true;
     }
-
 
     public virtual List<IQuestionFile> GetContent(string category = "", string language = "", bool recurse = false) {
       QFiles.Clear();
@@ -79,11 +86,14 @@ namespace AskMeLib {
       if (string.IsNullOrWhiteSpace(DataFolder)) {
         return QFiles;
       }
-      if (!Directory.Exists(DataFolder)) {
+
+      string CurrentDataFolder = Path.Combine(StorageLocation, DataFolder);
+
+      if (!Directory.Exists(CurrentDataFolder)) {
         return QFiles;
       }
 
-      foreach (string FileItem in Directory.GetFiles(DataFolder, TQuestionFile.QUESTION_FILE_EXTENSION, SearchOption.AllDirectories)) {
+      foreach (string FileItem in Directory.GetFiles(CurrentDataFolder, $"*{TQuestionFile.QUESTION_FILE_EXTENSION}", SearchOption.AllDirectories)) {
         TQuestionFile TempFile = new TQuestionFile(FileItem);
         if ((category == "" || TempFile.Header.Category.ToLower().Contains(category.ToLower()))
           && (language == "" || TempFile.Header.IsLanguageMatching(language))) {
@@ -96,7 +106,7 @@ namespace AskMeLib {
 
     public virtual string GetContentList(string category = "", string language = "", bool recurse = false) {
       StringBuilder RetVal = new StringBuilder();
-      IEnumerable<IFolder> Content = GetContent(category, language, recurse);
+      IEnumerable<IQuestionFile> Content = GetContent(category, language, recurse);
       if (Content == null || Content.Count() == 0) {
         return "";
       }

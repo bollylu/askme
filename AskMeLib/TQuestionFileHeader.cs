@@ -54,7 +54,7 @@ namespace AskMeLib {
     }
     #endregion --- Converters -------------------------------------------------------------------------------------
 
-    public bool IsLanguageOk(string language = "") {
+    public bool IsLanguageMatching(string language = "") {
       return Language.ToLower() == language.ToLower();
     }
   }

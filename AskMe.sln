@@ -17,6 +17,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentat
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Repository Test", "Repository Test", "{19C76D56-6542-4A2A-83B2-B728784B6364}"
+	ProjectSection(SolutionItems) = preProject
+		Repository Test\Repository.xml = Repository Test\Repository.xml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -57,6 +57,7 @@
     <Compile Include="Interfaces\IQuestionFile.cs" />
     <Compile Include="Interfaces\IFolderHeader.cs" />
     <Compile Include="Interfaces\IQuestionFileHeader.cs" />
+    <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\IXmlBase.cs" />
     <Compile Include="TChoice.cs" />
     <Compile Include="TQuestion.cs" />

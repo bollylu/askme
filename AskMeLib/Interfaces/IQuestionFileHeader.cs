@@ -12,5 +12,7 @@ namespace AskMeLib {
     string Language { get; set; }
     string Category { get; set; }
 
+    bool IsLanguageMatching(string language = "");
+
   }
 }

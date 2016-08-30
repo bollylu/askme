@@ -8,5 +8,7 @@ namespace AskMeLib {
   public interface IXmlBase {
     string Name { get; set; }
     string Description { get; set; }
+
+    string StorageLocation { get; set; }
   }
 }

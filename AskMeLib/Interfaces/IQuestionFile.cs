@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 namespace AskMeLib {
   public interface IQuestionFile : IXmlBase {
 
-    string Location { get; set; }
     List<TQuestionCollection> Items { get; set; }
     IQuestionFileHeader Header { get; set; }
 

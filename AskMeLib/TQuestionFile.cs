@@ -39,14 +39,14 @@ namespace AskMeLib {
 
     #region --- Constructor(s) --------------------------------------------------------------------
     public TQuestionFile(string location) : base() {
-      Location = location;
+      StorageLocation = location;
     }
 
     public TQuestionFile(IQuestionFile questionFile) : base(questionFile) {
       if (questionFile == null) {
         return;
       }
-      Location = questionFile.Location;
+      StorageLocation = questionFile.StorageLocation;
       foreach(IQuestionCollection QuestionCollectionItem in questionFile.Items) {
         Items.Add(new TQuestionCollection(QuestionCollectionItem));
       }
@@ -60,7 +60,7 @@ namespace AskMeLib {
     #region --- Converters ------------------------------------------------------------------------
     public override string ToString() {
       StringBuilder RetVal = new StringBuilder();
-      RetVal.Append($"File : {Location}");
+      RetVal.Append($"File : {StorageLocation}");
       RetVal.Append($", {Header}");
       return RetVal.ToString();
     }
@@ -69,17 +69,17 @@ namespace AskMeLib {
     public void ReadData(string location = "") {
       #region Validate parameters
       if (location != "") {
-        Location = location;
+        StorageLocation = location;
       }
-      if (!File.Exists(Location)) {
+      if (!File.Exists(StorageLocation)) {
         return;
       }
       #endregion Validate parameters
 
       Items.Clear();
-      Trace.WriteLine($"Loading {Location}");
+      Trace.WriteLine($"Loading {StorageLocation}");
       try {
-        XDocument MyData = XDocument.Load(Location);
+        XDocument MyData = XDocument.Load(StorageLocation);
         XElement Root = MyData.Element(XML_THIS_ELEMENT);
         IEnumerable<XElement> QuestionCollections = Root.Elements(TQuestionCollection.XML_THIS_ELEMENT);
         if (QuestionCollections.Count() > 0) {
@@ -98,18 +98,18 @@ namespace AskMeLib {
     public IQuestionFileHeader ReadHeader(string location = "") {
       #region Validate parameters
       if (location != "") {
-        Location = location;
+        StorageLocation = location;
       }
-      if (!File.Exists(Location)) {
+      if (!File.Exists(StorageLocation)) {
         return null;
       }
       #endregion Validate parameters
 
-      Trace.WriteLine($"Reading header of {Location}");
+      Trace.WriteLine($"Reading header of {StorageLocation}");
       TQuestionFileHeader FileHeader;
       XDocument MyData;
       try {
-        MyData = XDocument.Load(Location);
+        MyData = XDocument.Load(StorageLocation);
         XElement Root = MyData.Element(XML_THIS_ELEMENT);
         FileHeader = new TQuestionFileHeader(Root.Element(TQuestionFileHeader.XML_THIS_ELEMENT));
         return FileHeader;
