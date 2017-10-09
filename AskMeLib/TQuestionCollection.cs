@@ -51,6 +51,17 @@ namespace AskMeLib {
     }
     #endregion --- Constructeurs ------------------------------------------------------------------
 
+    public string ToJSon() {
+      StringBuilder RetVal = new StringBuilder("{[");
+      foreach (IQuestion QuestionItem in Items) {
+        RetVal.Append(QuestionItem.ToJSon());
+        RetVal.Append(",");
+      }
+      RetVal.Truncate(1);
+      RetVal.Append("]}");
+      return RetVal.ToString();
+    }
+
     public void Ask() {
       Counter = 0;
       Console.WriteLine($"Collection : {Name}");

@@ -1,0 +1,23 @@
+{
+  "version": 2,
+  "exports": {
+    "AskMeLib/1.0.0": {
+      "type": "project",
+      "framework": ".NETFramework,Version=v4.6.2",
+      "compile": {
+        "bin/Debug/AskMeLib.dll": {}
+      },
+      "runtime": {
+        "../packages/BLTools.45.2.451.6091.23834/lib/net45/BLTools.45.dll": {},
+        "bin/Debug/AskMeLib.dll": {}
+      },
+      "contentFiles": {
+        "bin/Debug/AskMeLib.pdb": {
+          "buildAction": "None",
+          "codeLanguage": "any",
+          "copyToOutput": true
+        }
+      }
+    }
+  }
+}

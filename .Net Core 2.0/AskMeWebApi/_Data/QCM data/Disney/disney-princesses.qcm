@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<root>
+
+  <Header Name="Disney001" Description="Les dessins animés de Disney, volume 1" CreationTime="2016-07-25 14:17" CreatedBy="Luc" Language="FR" Category="fun">
+    <Security IsEncrypted="false" Password=""/>
+  </Header>
+
+ 
+    <Questions Name="Princesses" Description="Questions sur les princesses" >
+
+      <Question Name="Qui est la plus belle ?" QuestionType="QCM1" >
+        <Choices>
+          <Choice Name="Blanche-Neige" Description="La princesse Blanche-neige" IsCorrect="True"></Choice>
+          <Choice Name="Cendrillon" Description="La future princesse Cendrillon"></Choice>
+          <Choice Name="Le Belle-au-bois-dormant" Description="La princesse qui s'endort"></Choice>
+        </Choices>
+        <Hint>On en trouve en hiver</Hint>
+        <Explain>Dans Blanche-neige et les 7 nains, la Reine est en colère parce que le miroir lui dit sans arrêt que Blanche-neige est la plus belle</Explain>
+      </Question>
+
+
+      <Question Name="Qui nage et respire sous l'eau ?" QuestionType="QCM1" >
+        <Choices>
+          <Choice Name="Arielle" Description="Dans la petite sirène" IsCorrect="True"></Choice>
+          <Choice Name="La grenouille" Description="Dans La princesse et la grenouille"></Choice>
+          <Choice Name="O'Malley" Description="Dans les aristochats"></Choice>
+        </Choices>
+        <Hint>C'est presque de la lessive</Hint>
+        <Explain>Arielle est une sirène et donc peut respirer sous l'eau</Explain>
+      </Question>
+      
+    </Questions>
+
+</root>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<root>
+
+<Repository Name="Test 2" Description="Repository 2" QcmFolder="QCM data" DescFolder="DESC data"/>
+
+</root>

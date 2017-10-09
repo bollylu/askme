@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.ServiceModel;
 using System.Runtime.Serialization;
+using BLTools;
 
 namespace AskMeLib {
 
@@ -137,6 +138,23 @@ namespace AskMeLib {
       } 
       #endregion === Validate parameters ===
       return Header.Language.ToLower() == language.ToLower();
+    }
+
+    public string ToJSon() {
+      StringBuilder RetVal = new StringBuilder("{");
+
+      RetVal.Append($"\"{XML_ATTRIBUTE_NAME}\":\"{Name}\"");
+      RetVal.Append(", [");
+      foreach(TQuestionCollection QuestionCollectionItem in Items) {
+        RetVal.Append($"{QuestionCollectionItem.ToJSon()},");
+      }
+      if (Items.Count()>0) {
+        RetVal.Truncate(1);
+      }
+      RetVal.Append("]");
+
+      RetVal.Append("}");
+      return RetVal.ToString();
     }
   }
 }

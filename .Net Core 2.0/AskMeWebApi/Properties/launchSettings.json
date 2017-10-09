@@ -1,0 +1,17 @@
+{
+  "AskMeWebApi": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true
+  },
+  "profiles": {
+    "AskMeWebApi": {
+      "commandName": "Project",
+      "launchUrl": "api/values",
+      "environmentVariables": {
+        "ASPNETCORE_preventHostingStartup": "True",
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "http://localhost:25459/"
+    }
+  }
+}

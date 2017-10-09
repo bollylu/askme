@@ -46,6 +46,14 @@ namespace AskMeLib {
     } 
     #endregion --- Constructor(s) ------------------------------------------------------------------------------
 
+    public string ToJSon() {
+      StringBuilder RetVal = new StringBuilder("{");
+      RetVal.Append($"\"{XML_ATTRIBUTE_QUESTION_TYPE}\":\"{QuestionType}\"");
+      RetVal.Append($", \"{XML_ATTRIBUTE_NAME}\":\"{Name}\"");
+      RetVal.Append("}");
+      return RetVal.ToString();
+    }
+
     public bool Ask() {
       bool ReponseOk = false;
 
