@@ -14,10 +14,10 @@ namespace AskMeLibTest {
     [TestMethod]
     public void InstantiateRepository_MinimumParameters_DataOk() {
       using ( TRepository Repository = new TRepository(REPOSITORY_TESTFOLDER_NAME) ) {
-        Assert.AreEqual(REPOSITORY_TESTFOLDER_NAME, Repository.RepositoryPath);
-        Assert.AreEqual(Path.Combine(REPOSITORY_TESTFOLDER_NAME, TRepository.DEFAULT_REPOSITORY_FILENAME), Repository.RepositoryFilename);
-        Assert.AreEqual(Path.Combine(REPOSITORY_TESTFOLDER_NAME, Repository.DataFolderName), Repository.CompleteDataFolderName);
-        Assert.AreEqual(Path.Combine(REPOSITORY_TESTFOLDER_NAME, Repository.DescFolderName), Repository.CompleteDescFolderName);
+        Assert.AreEqual(Path.Combine(TRepository.GlobalRepositoryRoot, REPOSITORY_TESTFOLDER_NAME), Repository.RepositoryPath);
+        Assert.AreEqual(Path.Combine(TRepository.GlobalRepositoryRoot, REPOSITORY_TESTFOLDER_NAME, TRepository.DEFAULT_REPOSITORY_FILENAME), Repository.RepositoryFilename);
+        Assert.AreEqual(Path.Combine(TRepository.GlobalRepositoryRoot, REPOSITORY_TESTFOLDER_NAME, Repository.DataFolderName), Repository.CompleteDataFolderName);
+        Assert.AreEqual(Path.Combine(TRepository.GlobalRepositoryRoot, REPOSITORY_TESTFOLDER_NAME, Repository.DescFolderName), Repository.CompleteDescFolderName);
       }
     }
 
@@ -28,8 +28,8 @@ namespace AskMeLibTest {
         JsonRepository = Repository.ToJson();
       }
       using ( TRepository Actual = new TRepository(JsonRepository) ) {
-        Assert.AreEqual(REPOSITORY_TESTFOLDER_NAME, Actual.RepositoryPath);
-        Assert.AreEqual(Path.Combine(REPOSITORY_TESTFOLDER_NAME, TRepository.DEFAULT_REPOSITORY_FILENAME), Actual.RepositoryFilename);
+        Assert.AreEqual(Path.Combine(TRepository.GlobalRepositoryRoot, REPOSITORY_TESTFOLDER_NAME), Actual.RepositoryPath);
+        Assert.AreEqual(Path.Combine(TRepository.GlobalRepositoryRoot, REPOSITORY_TESTFOLDER_NAME, TRepository.DEFAULT_REPOSITORY_FILENAME), Actual.RepositoryFilename);
         Assert.AreEqual(TRepository.DEFAULT_DATA_FOLDER_NAME, Actual.DataFolderName);
         Assert.AreEqual(TRepository.DEFAULT_DESC_FOLDER_NAME, Actual.DescFolderName);
       }
@@ -44,8 +44,8 @@ namespace AskMeLibTest {
         JsonRepository = Repository.ToJson();
       }
       using ( TRepository Actual = new TRepository(JsonRepository) ) {
-        Assert.AreEqual(REPOSITORY_TESTFOLDER_NAME, Actual.RepositoryPath);
-        Assert.AreEqual(Path.Combine(REPOSITORY_TESTFOLDER_NAME, TRepository.DEFAULT_REPOSITORY_FILENAME), Actual.RepositoryFilename);
+        Assert.AreEqual(Path.Combine(TRepository.GlobalRepositoryRoot, REPOSITORY_TESTFOLDER_NAME), Actual.RepositoryPath);
+        Assert.AreEqual(Path.Combine(TRepository.GlobalRepositoryRoot, REPOSITORY_TESTFOLDER_NAME, TRepository.DEFAULT_REPOSITORY_FILENAME), Actual.RepositoryFilename);
         Assert.AreEqual(REPOSITORY_ALTERNATE_DATA, Actual.DataFolderName);
         Assert.AreEqual(REPOSITORY_ALTERNATE_DESC, Actual.DescFolderName);
       }

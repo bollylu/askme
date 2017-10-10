@@ -93,13 +93,6 @@
 <node TEXT="UNC repository (file system + XML)" ID="ID_630484704" CREATED="1471355155503" MODIFIED="1471355189202"/>
 </node>
 </node>
-<node TEXT="UNC repository as a tree" POSITION="left" ID="ID_1895983380" CREATED="1471355581431" MODIFIED="1471867897336" HGAP_QUANTITY="-59.5 pt" VSHIFT_QUANTITY="-55.5 pt">
-<edge COLOR="#0000ff"/>
-<node TEXT="1. Root folder + sub-folders, each containing .QCM files" ID="ID_375539728" CREATED="1471355595540" MODIFIED="1471355633008"/>
-<node TEXT="2. In each folder, a header.xml contains description for the folder content" ID="ID_832575900" CREATED="1471355638590" MODIFIED="1471355681432"/>
-<node TEXT="3. Language and category settings are at the folder level and content (.QCM files) must match. While going deeper in the tree, the category can have a suffix (cat/subcat) : in this case, the .QCM files must match this category label." ID="ID_1175068204" CREATED="1471355765975" MODIFIED="1471356077788"/>
-<node TEXT="4. Each .QCM file also has a header with name, description, language, category. Language and category must match the folder header." ID="ID_1489499082" CREATED="1471355837601" MODIFIED="1471356056441"/>
-</node>
 <node TEXT="UNC repository as lists" POSITION="right" ID="ID_219908570" CREATED="1471857902769" MODIFIED="1471868008829" HGAP_QUANTITY="-103.0 pt" VSHIFT_QUANTITY="74.25 pt">
 <edge COLOR="#00ff00"/>
 <node TEXT="Main list (one folder) containing .QCM files" ID="ID_64682090" CREATED="1471857927469" MODIFIED="1471867678898">
@@ -116,6 +109,13 @@
 </node>
 </node>
 <node TEXT="Similar to SQL organization" ID="ID_652219914" CREATED="1471864953334" MODIFIED="1471864992258"/>
+</node>
+<node TEXT="UNC repository as a tree" POSITION="left" ID="ID_1895983380" CREATED="1471355581431" MODIFIED="1471867897336" HGAP_QUANTITY="-59.5 pt" VSHIFT_QUANTITY="-55.5 pt">
+<edge COLOR="#0000ff"/>
+<node TEXT="1. Root folder + sub-folders, each containing .QCM files" ID="ID_375539728" CREATED="1471355595540" MODIFIED="1471355633008"/>
+<node TEXT="2. In each folder, a header.xml contains description for the folder content" ID="ID_832575900" CREATED="1471355638590" MODIFIED="1471355681432"/>
+<node TEXT="3. Language and category settings are at the folder level and content (.QCM files) must match. While going deeper in the tree, the category can have a suffix (cat/subcat) : in this case, the .QCM files must match this category label." ID="ID_1175068204" CREATED="1471355765975" MODIFIED="1471356077788"/>
+<node TEXT="4. Each .QCM file also has a header with name, description, language, category. Language and category must match the folder header." ID="ID_1489499082" CREATED="1471355837601" MODIFIED="1471356056441"/>
 </node>
 </node>
 </map>

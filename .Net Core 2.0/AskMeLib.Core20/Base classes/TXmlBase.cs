@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.Runtime.Serialization;
 using System.IO;
+using Newtonsoft.Json;
 
 namespace AskMeLib {
 
@@ -18,6 +19,7 @@ namespace AskMeLib {
     #endregion --- XML constants -------------------------------------------------------------------------------
 
     #region --- Public properties ------------------------------------------------------------------------------
+    [JsonIgnore]
     public string StorageLocation { get; set; }
 
     public string Name { get; set; }

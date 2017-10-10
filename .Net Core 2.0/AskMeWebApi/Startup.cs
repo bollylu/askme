@@ -20,20 +20,22 @@ namespace AskMeWebApi {
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services) {
       services.AddMvc();
+      services.AddLogging();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-    public void Configure(IApplicationBuilder app, IHostingEnvironment env) {
+    public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory) {
       if ( env.IsDevelopment() ) {
         app.UseDeveloperExceptionPage();
       }
 
+      loggerFactory.AddConsole();
+      loggerFactory.AddDebug(LogLevel.Debug);
+
       app.UseStaticFiles();
 
       app.UseMvc(routes => {
-        //routes.MapRoute(name: "GetContent", template: "{controller=Repository}/{action=GetContent}/{name?}");
         routes.MapRoute(name: "default", template: "{controller=Repository}/{action=Index}/{name?}");
-        
       });
     }
   }

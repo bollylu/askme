@@ -12,6 +12,7 @@ using System.Xml.Linq;
 namespace AskMeLib {
   public partial class TRepository : TXmlBase, IRepository {
 
+    public const string DEFAULT_REPOSITORY_ROOT = @"i:\AskMeRepositories";
     public const string DEFAULT_REPOSITORY_PATH = "_Data";
     public const string DEFAULT_REPOSITORY_FILENAME = "repository.xml";
     public const string DEFAULT_DATA_FOLDER_NAME = "Data";
@@ -22,13 +23,41 @@ namespace AskMeLib {
     public const string XML_ATTRIBUTE_DESC_FOLDER = "DescFolder";
 
     #region --- Public properties -----------------------------------------------------------------
+    [JsonIgnore]
+    public static string GlobalRepositoryRoot {
+      get {
+        if (string.IsNullOrWhiteSpace(_GlobalRepositoryRoot)) {
+          return DEFAULT_REPOSITORY_ROOT;
+        }
+        return _GlobalRepositoryRoot;
+      }
+      set {
+        _GlobalRepositoryRoot = value;
+      }
+    }
+    private static string _GlobalRepositoryRoot;
 
+    [JsonIgnore]
+    public string RepositoryRoot {
+      get {
+        if ( string.IsNullOrWhiteSpace(_RepositoryRoot) ) {
+          return GlobalRepositoryRoot;
+        }
+        return _RepositoryRoot;
+      }
+      set {
+        _RepositoryRoot = value;
+      }
+    }
+    private string _RepositoryRoot;
+
+    [JsonIgnore]
     public string RepositoryPath {
       get {
         if ( string.IsNullOrWhiteSpace(_RepositoryPath) ) {
-          return DEFAULT_REPOSITORY_PATH;
+          return Path.Combine(RepositoryRoot, DEFAULT_REPOSITORY_PATH);
         }
-        return _RepositoryPath;
+        return Path.Combine(RepositoryRoot, _RepositoryPath);
       }
       set {
         _RepositoryPath = value;
@@ -91,6 +120,9 @@ namespace AskMeLib {
         return false;
       }
     }
+
+    [JsonIgnore]
+    public static object Empty => new object();
     #endregion --- Public properties --------------------------------------------------------------
 
     #region --- Constructor(s) --------------------------------------------------------------------

@@ -9,10 +9,10 @@ using System.IO;
 
 namespace AskMeWebApi.Controllers {
   [Produces("application/json")]
-  public class RepositoryController : Controller {
+  public class QuestionController : Controller {
 
     [HttpGet]
-    [Route("api/Repository/{name?}")]
+    [Route("api/Question/{repository}/{name}")]
     public JsonResult Get(string name = "") {
       if ( name == "" ) {
         List<string> RetVal = new List<string>();
@@ -31,16 +31,5 @@ namespace AskMeWebApi.Controllers {
 
     }
 
-    [HttpGet]
-    [Route("api/Repository/GetContent")]
-    public JsonResult GetContent(string name = "") {
-      using ( TRepository Repository = new TRepository(name) ) {
-        if ( !Repository.Open() ) {
-          return new JsonResult(null);
-        }
-        return new JsonResult(Repository.QFiles);
-      }
-
-    }
   }
 }
