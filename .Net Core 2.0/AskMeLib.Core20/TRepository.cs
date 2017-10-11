@@ -137,13 +137,11 @@ namespace AskMeLib {
 
     public TRepository(JsonString repository) {
       try {
-        dynamic TempVar = repository.Deserialize();
-        Name = TempVar.Name;
-        Description = TempVar.Description;
-        DataFolderName = TempVar.DataFolderName;
-        DescFolderName = TempVar.DescFolderName;
-        RepositoryPath = TempVar.RepositoryPath;
-        StorageLocation = RepositoryFilename;
+        Name = repository.SafeGetValue<string>(nameof(Name), "");
+        Description = repository.SafeGetValue<string>(nameof(Description), "");
+        DataFolderName = repository.SafeGetValue<string>("toto", DEFAULT_DATA_FOLDER_NAME);
+        DescFolderName = repository.SafeGetValue<string>(nameof(DescFolderName), DEFAULT_DESC_FOLDER_NAME);
+        RepositoryPath = repository.SafeGetValue<string>(nameof(RepositoryPath), DEFAULT_REPOSITORY_PATH);
       } catch ( Exception ex ) {
         Trace.WriteLine($"Unable to create TRepository : {ex.Message}");
         throw new ArgumentException("Unable to create TRepository : JsonString error", nameof(repository));

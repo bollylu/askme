@@ -14,23 +14,34 @@ namespace AskMeTestSdkClient {
     }
 
     private static async Task MainAsync(string[] args) {
+      TraceFactory.AddTraceConsole();
+      ApplicationInfo.ApplicationStart();
       ConsoleExtension.Pause("Waiting for the server to start...", 5000, true, true);
 
       SplitArgs Args = new SplitArgs(args);
 
-      string ServerRoot = Args.GetValue<string>("server", "http://localhost:25459/api");
+      string ServerRoot = Args.GetValue<string>("server", "http://localhost:25459");
+      TAskMeServer.GlobalServerRoot = ServerRoot;
 
       Trace.WriteLine($"Request to server {ServerRoot}");
 
       try {
-        using ( TAskMeServer Server = new TAskMeServer(ServerRoot) ) {
-          TRepository Repository = await Server.GetRepository(TRepository.DEFAULT_REPOSITORY_PATH);
+        TRepository Repository;
+        using ( TAskMeServer Server = new TAskMeServer() ) {
+
+          Repository = await Server.GetRepository();
+          if ( Repository != null ) {
+            Console.WriteLine(Repository.ToString());
+          }
+
+          Repository = await Server.GetRepository("SecondRepository");
           if ( Repository != null ) {
             Console.WriteLine(Repository.ToString());
           }
         }
       } catch { }
 
+      ApplicationInfo.ApplicationStop();
       ConsoleExtension.Pause();
     }
   }

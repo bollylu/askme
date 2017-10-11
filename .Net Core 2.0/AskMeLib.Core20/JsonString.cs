@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Diagnostics;
 
 namespace AskMeLib {
   public class JsonString {
@@ -13,13 +14,7 @@ namespace AskMeLib {
       Content = json;
     }
 
-    public virtual dynamic Deserialize() {
-      if (_IsValid()) {
-        return JsonConvert.DeserializeObject(Content);
-      }
-
-      throw new ApplicationException("Unable to deserialize JsonString : invalid string");
-    }
+    public static JsonString Empty => new JsonString("");
 
     private bool _IsValid() {
       try {
@@ -29,8 +24,25 @@ namespace AskMeLib {
         return false;
       }
     }
-    
+
+    public T SafeGetValue<T>(string name, T defaultValue) {
+      if ( string.IsNullOrWhiteSpace(name) ) {
+        Trace.WriteLine("Unable to get value from JsonString : name is invalid");
+        throw new ArgumentException($"Unable to get value from JsonString : {nameof(name)} is invalid", nameof(name));
+      }
+
+      try {
+        T Temp = JToken.Parse(Content).Value<T>(name.ToLowerInvariant());
+        if (Temp==null) {
+          return defaultValue;
+        }
+        return Temp;
+      } catch ( Exception ex ) {
+        Trace.WriteLine($"Error parsing JsonString content : {ex.Message}");
+        return defaultValue;
+      }
+    }
+
   }
 
-  
 }

@@ -34,14 +34,14 @@ namespace AskMeSdkForCSharp {
     }
 
     public async Task<JsonString> DoJsonStringRequest(string request) {
-      return new JsonString(await DoStringRequest(request, new JsonString("")));
+      return new JsonString(await DoStringRequest(request, JsonString.Empty));
     }
     public async Task<JsonString> DoJsonStringRequest(string request, JsonString body) {
       return new JsonString(await DoStringRequest(request, body));
     }
 
     public async Task<string> DoStringRequest(string request) {
-      return await DoStringRequest(request, new JsonString(""));
+      return await DoStringRequest(request, JsonString.Empty);
     }
     public async Task<string> DoStringRequest(string request, JsonString body) {
       Trace.WriteLine($"Request : {request}");
