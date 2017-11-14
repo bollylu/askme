@@ -9,11 +9,11 @@ using System.Xml.Linq;
 using System.IO;
 using System.Diagnostics;
 using System.Runtime.Serialization;
-
+using BLTools.Json;
 
 namespace AskMeLib {
 
-  public partial class TChoiceCollection : TXmlBase, IChoiceCollection {
+  public partial class TChoiceCollection : TObjectBase, IChoiceCollection {
 
     #region --- XML constants ----------------------------------------------------------------------------------
     public const string XML_THIS_ELEMENT = "Choices"; 
@@ -36,8 +36,15 @@ namespace AskMeLib {
           Items.Add(new TChoice(ChoiceItem));
         }
       }
-    } 
+    }
     #endregion --- Constructor(s) ------------------------------------------------------------------------------
 
+    public override IJsonValue ToJson() {
+      JsonArray RetVal = new JsonArray();
+      foreach(IChoice ItemItem in Items) {
+        RetVal.AddItem(ItemItem.ToJson());
+      }
+      return RetVal;
+    }
   }
 }

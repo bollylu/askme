@@ -1,4 +1,5 @@
 ﻿using AskMeLib;
+using BLTools.Json;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -54,7 +55,7 @@ namespace AskMeSdkForCSharp {
 
     public async Task<TRepository> GetRepository(string name = TRepository.DEFAULT_REPOSITORY_PATH) {
       using ( TRestApi RestApi = new TRestApi(ServerRoot) ) {
-        JsonString ValueFromServer = await RestApi.DoJsonStringRequest($"api/repository/{name}");
+        IJsonValue ValueFromServer = await RestApi.DoJsonStringRequest($"api/repository/{name}");
         if ( RestApi.LastStatusCode == HttpStatusCode.OK ) {
           return new TRepository(ValueFromServer);
         }

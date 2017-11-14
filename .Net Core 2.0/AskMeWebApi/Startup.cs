@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Mvc.Formatters;
 
 namespace AskMeWebApi {
   public class Startup {
@@ -19,8 +20,12 @@ namespace AskMeWebApi {
 
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services) {
-      services.AddMvc();
+      services.AddMvc(options => {
+        options.OutputFormatters.RemoveType<JsonOutputFormatter>();
+        options.OutputFormatters.Insert(0, new BLJsonOutputFormatter());
+      });
       services.AddLogging();
+      
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -30,6 +35,7 @@ namespace AskMeWebApi {
       }
 
       app.UseStaticFiles();
+      
 
       app.UseMvc(routes => {
         routes.MapRoute(name: "default", template: "{controller=Repository}/{action=Index}/{name?}");

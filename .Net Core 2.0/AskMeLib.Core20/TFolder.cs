@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace AskMeLib {
-  public partial class TFolder : TXmlBase {
+  public partial class TFolder : TObjectBase {
 
     //#region --- Public properties -----------------------------------------------------------------
     //public string Location { get; set; }

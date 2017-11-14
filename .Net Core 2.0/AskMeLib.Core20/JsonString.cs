@@ -1,22 +1,68 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Diagnostics;
+using BLTools;
+using System.Collections.Generic;
 
 namespace AskMeLib {
-  public class JsonString {
-    public string Content { get; set; }
-    public JsonString(string json) {
-      Content = json;
+  public class JsonData : IEquatable<JsonData>, IComparable<JsonData> {
+
+    public static JsonData Empty => new JsonData();
+    public static JsonData EmptyObject => new JsonData(new object());
+
+    #region --- Public properties ------------------------------------------------------------------------------
+    private object _ContentLock = new object();
+
+    public string Content { get; protected set; } = "";
+
+    public Dictionary<string, object> RawContent { get; protected set; } = new Dictionary<string, object>();
+    #endregion --- Public properties ---------------------------------------------------------------------------
+
+    #region --- Constructor(s) ---------------------------------------------------------------------------------
+    public JsonData() {
+    }
+    public JsonData(object jsonContent) {
+      Initialize(jsonContent);
     }
 
-    public static JsonString Empty => new JsonString("");
+    protected void Initialize(object jsonObject) {
+      if ( jsonObject == null ) {
+        return;
+      }
 
-    private bool _IsValid() {
+      if ( jsonObject is JsonData ) {
+        JsonData JsonDataSource = jsonObject as JsonData;
+        lock ( _ContentLock ) {
+          Content = JsonDataSource.Content;
+          RawContent.Clear();
+          foreach(KeyValuePair<string, object> JsonItem in JsonDataSource.RawContent) {
+            RawContent.Add(JsonItem.Key, JsonItem.Value);
+          }
+        }
+        return;
+      }
+
+      lock ( _ContentLock ) {
+        Content = JsonConvert.SerializeObject(jsonObject);
+        JToken ParsedValues = JToken.Parse(Content);
+        if ( !ParsedValues.HasValues ) {
+          return;
+        }
+        
+      }
+    }
+    #endregion --- Constructor(s) ------------------------------------------------------------------------------
+
+    public void Clear() {
+      lock(_ContentLock) {
+        Content = "";
+        RawContent.Clear();
+      }
+      
+    }
+
+    public bool IsValid() {
       try {
         JContainer.Parse(Content);
         return true;
@@ -32,8 +78,13 @@ namespace AskMeLib {
       }
 
       try {
-        T Temp = JToken.Parse(Content).Value<T>(name.ToLowerInvariant());
-        if (Temp==null) {
+        JToken ParsedValues = JToken.Parse(Content);
+        if ( !ParsedValues.HasValues ) {
+          return defaultValue;
+        }
+        JToken SelectedToken = ParsedValues.SelectToken(name, true);
+        T Temp = SelectedToken.ToObject<T>();
+        if ( Temp == null ) {
           return defaultValue;
         }
         return Temp;
@@ -43,6 +94,44 @@ namespace AskMeLib {
       }
     }
 
+    public void Add(JsonData newItem) {
+      if ( newItem == null ) {
+        return;
+      }
+      if ( this == Empty ) {
+        Content = newItem.Content;
+        return;
+      }
+
+      Content = $"{{ {Content.Substring(1).Left(Content.Length - 1)}, {newItem.Content} }}";
+    }
+
+    #region --- IEquatable --------------------------------------------
+    public override bool Equals(object obj) {
+      if ( obj == null ) {
+        return false;
+      }
+
+      return Content.Equals(( (JsonData)obj ).Content);
+    }
+
+    public bool Equals(JsonData other) {
+      if ( other == null ) {
+        return false;
+      }
+      return Content.Equals(other.Content);
+    }
+
+    public override int GetHashCode() {
+      return Content.GetHashCode();
+    }
+    #endregion --- IEquatable --------------------------------------------
+
+    #region --- IComparable --------------------------------------------
+    public int CompareTo(JsonData other) {
+      return Content.CompareTo(other.Content);
+    }
+    #endregion --- IComparable --------------------------------------------
   }
 
 }

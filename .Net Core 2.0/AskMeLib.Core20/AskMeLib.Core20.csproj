@@ -5,7 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BLTools" Version="4.0.0-CI-20171003-134244" />
+    <Compile Remove="JsonString.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BLTools" Version="4.0.0-CI-20171114-200602" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
   </ItemGroup>
 

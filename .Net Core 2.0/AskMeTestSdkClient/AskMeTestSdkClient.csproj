@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BLTools" Version="4.0.0-CI-20171003-134244" />
+    <PackageReference Include="BLTools" Version="4.0.0-CI-20171114-200602" />
   </ItemGroup>
 
   <ItemGroup>

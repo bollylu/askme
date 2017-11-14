@@ -1,5 +1,6 @@
 ﻿using BLTools;
-using Newtonsoft.Json;
+using BLTools.Json;
+//using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 
 namespace AskMeLib {
-  public partial class TRepository : TXmlBase, IRepository {
+  public partial class TRepository : TObjectBase, IRepository {
 
     public const string DEFAULT_REPOSITORY_ROOT = @"i:\AskMeRepositories";
     public const string DEFAULT_REPOSITORY_PATH = "_Data";
@@ -23,10 +24,9 @@ namespace AskMeLib {
     public const string XML_ATTRIBUTE_DESC_FOLDER = "DescFolder";
 
     #region --- Public properties -----------------------------------------------------------------
-    [JsonIgnore]
     public static string GlobalRepositoryRoot {
       get {
-        if (string.IsNullOrWhiteSpace(_GlobalRepositoryRoot)) {
+        if ( string.IsNullOrWhiteSpace(_GlobalRepositoryRoot) ) {
           return DEFAULT_REPOSITORY_ROOT;
         }
         return _GlobalRepositoryRoot;
@@ -37,7 +37,6 @@ namespace AskMeLib {
     }
     private static string _GlobalRepositoryRoot;
 
-    [JsonIgnore]
     public string RepositoryRoot {
       get {
         if ( string.IsNullOrWhiteSpace(_RepositoryRoot) ) {
@@ -51,7 +50,6 @@ namespace AskMeLib {
     }
     private string _RepositoryRoot;
 
-    [JsonIgnore]
     public string RepositoryPath {
       get {
         if ( string.IsNullOrWhiteSpace(_RepositoryPath) ) {
@@ -65,7 +63,6 @@ namespace AskMeLib {
     }
     private string _RepositoryPath;
 
-    [JsonIgnore]
     public string RepositoryFilename => Path.Combine(RepositoryPath, DEFAULT_REPOSITORY_FILENAME);
 
     #region --- Data folder --------------------------------------------
@@ -83,7 +80,6 @@ namespace AskMeLib {
     }
     private string _DataFolderName;
 
-    [JsonIgnore]
     public string CompleteDataFolderName => Path.Combine(RepositoryPath, DataFolderName);
     #endregion --- Data folder --------------------------------------------
 
@@ -101,14 +97,11 @@ namespace AskMeLib {
     }
     private string _DescFolderName;
 
-    [JsonIgnore]
     public string CompleteDescFolderName => Path.Combine(RepositoryPath, DescFolderName);
     #endregion --- Desc folder --------------------------------------------
 
-    [JsonIgnore]
     public List<IQuestionFile> QFiles { get; set; } = new List<IQuestionFile>();
 
-    [JsonIgnore]
     public bool IsInvalid {
       get {
         if ( string.IsNullOrWhiteSpace(StorageLocation) ) {
@@ -121,8 +114,7 @@ namespace AskMeLib {
       }
     }
 
-    [JsonIgnore]
-    public static object Empty => new object();
+    public static TRepository Empty => new TRepository();
     #endregion --- Public properties --------------------------------------------------------------
 
     #region --- Constructor(s) --------------------------------------------------------------------
@@ -131,20 +123,23 @@ namespace AskMeLib {
     }
 
     public TRepository(string folder) : base() {
+      Name = folder;
       RepositoryPath = folder;
       StorageLocation = RepositoryFilename;
     }
 
-    public TRepository(JsonString repository) {
-      try {
-        Name = repository.SafeGetValue<string>(nameof(Name), "");
-        Description = repository.SafeGetValue<string>(nameof(Description), "");
-        DataFolderName = repository.SafeGetValue<string>("toto", DEFAULT_DATA_FOLDER_NAME);
-        DescFolderName = repository.SafeGetValue<string>(nameof(DescFolderName), DEFAULT_DESC_FOLDER_NAME);
-        RepositoryPath = repository.SafeGetValue<string>(nameof(RepositoryPath), DEFAULT_REPOSITORY_PATH);
-      } catch ( Exception ex ) {
-        Trace.WriteLine($"Unable to create TRepository : {ex.Message}");
-        throw new ArgumentException("Unable to create TRepository : JsonString error", nameof(repository));
+    public TRepository(IJsonValue repositoryValue) {
+      if ( repositoryValue is JsonObject repositoryObject ) {
+        try {
+          Name = repositoryObject.SafeGetValueFirst<string>(nameof(Name), "");
+          Description = repositoryObject.SafeGetValueFirst<string>(nameof(Description), "");
+          DataFolderName = repositoryObject.SafeGetValueFirst<string>(nameof(DataFolderName), DEFAULT_DATA_FOLDER_NAME);
+          DescFolderName = repositoryObject.SafeGetValueFirst<string>(nameof(DescFolderName), DEFAULT_DESC_FOLDER_NAME);
+          RepositoryPath = repositoryObject.SafeGetValueFirst<string>(nameof(RepositoryPath), DEFAULT_REPOSITORY_PATH);
+        } catch ( Exception ex ) {
+          Trace.WriteLine($"Unable to create TRepository : {ex.Message}");
+          throw new ArgumentException("Unable to create TRepository : JsonString error", nameof(repositoryObject));
+        }
       }
     }
 
@@ -172,12 +167,8 @@ namespace AskMeLib {
       RetVal.Append($", Description = {Description}");
       RetVal.Append($", Data = {DataFolderName}");
       RetVal.Append($", Rich = {DescFolderName}");
-      RetVal.Append($", Content = {QFiles.Count()} files");
+      RetVal.Append($", Content = {QFiles.Count} files");
       return RetVal.ToString();
-    }
-
-    public virtual JsonString ToJson(int subLevels = 0) {
-      return new JsonString(JsonConvert.SerializeObject(this));
     }
 
     public override XElement ToXml() {
@@ -186,6 +177,15 @@ namespace AskMeLib {
       RetVal.Add(XML_ATTRIBUTE_DESC_FOLDER, DescFolderName);
       return RetVal;
     }
+
+    public override IJsonValue ToJson() {
+      JsonObject RetVal = base.ToJson() as JsonObject;
+      RetVal.AddItem(new JsonPair(XML_ATTRIBUTE_QCM_FOLDER, DataFolderName));
+      RetVal.AddItem(new JsonPair(XML_ATTRIBUTE_DESC_FOLDER, DescFolderName));
+      RetVal.AddItem(new JsonPair(XML_ATTRIBUTE_QCM_FOLDER, QFiles.Count));
+      return RetVal;
+    }
+
     #endregion --- Converters ---------------------------------------------------------------------
 
     public bool Open() {

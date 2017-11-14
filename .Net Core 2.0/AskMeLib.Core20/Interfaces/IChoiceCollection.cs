@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace AskMeLib {
-  public interface IChoiceCollection : IXmlBase {
+  public interface IChoiceCollection : IObjectBase {
 
     List<IChoice> Items { get; set; }
 

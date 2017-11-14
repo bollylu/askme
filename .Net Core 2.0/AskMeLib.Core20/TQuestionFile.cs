@@ -12,7 +12,7 @@ using Newtonsoft.Json;
 
 namespace AskMeLib {
 
-  public partial class TQuestionFile : TXmlBase, IDisposable, IQuestionFile {
+  public partial class TQuestionFile : TObjectBase, IDisposable, IQuestionFile {
 
     #region --- XML constants ----------------------------------------------------------------------------------
     public const string XML_THIS_ELEMENT = "root";
@@ -147,7 +147,7 @@ namespace AskMeLib {
       RetVal.Append($"\"{XML_ATTRIBUTE_NAME}\":\"{Name}\"");
       RetVal.Append(", [");
       foreach(TQuestionCollection QuestionCollectionItem in Items) {
-        RetVal.Append($"{QuestionCollectionItem.ToJSon()},");
+        //RetVal.Append($"{QuestionCollectionItem.ToJSon()},");
       }
       if (Items.Count()>0) {
         RetVal.Truncate(1);

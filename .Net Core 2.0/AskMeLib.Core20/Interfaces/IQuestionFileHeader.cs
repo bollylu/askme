@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace AskMeLib {
-  public interface IQuestionFileHeader : IXmlBase {
+  public interface IQuestionFileHeader : IObjectBase {
 
     DateTime CreationTime { get; set; }
     string CreatedBy { get; set; }

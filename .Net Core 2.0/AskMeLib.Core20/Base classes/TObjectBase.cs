@@ -1,4 +1,5 @@
 ﻿using BLTools;
+using BLTools.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,37 +8,40 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.Runtime.Serialization;
 using System.IO;
-using Newtonsoft.Json;
 
 namespace AskMeLib {
 
-  public partial class TXmlBase : TNotificationBase, IToXml {
+  public partial class TObjectBase : TNotificationBase, IToXml, IObjectBase {
 
     #region --- XML constants ----------------------------------------------------------------------------------
+    public const string XML_ATTRIBUTE_ID = "Id";
     public const string XML_ATTRIBUTE_NAME = "Name";
     public const string XML_ATTRIBUTE_DESCRIPTION = "Description";
     #endregion --- XML constants -------------------------------------------------------------------------------
 
     #region --- Public properties ------------------------------------------------------------------------------
-    [JsonIgnore]
     public string StorageLocation { get; set; }
 
+    public string Id { get; protected set; }
     public string Name { get; set; }
     public string Description { get; set; }
     #endregion --- Public properties ---------------------------------------------------------------------------
 
     #region --- Constructor(s) ---------------------------------------------------------------------------------
-    public TXmlBase() {
+    public TObjectBase() {
+      Id = "";
       Name = "";
       Description = "";
     }
 
-    public TXmlBase(XElement element) {
+    public TObjectBase(XElement element) {
+      Id = element.SafeReadAttribute<string>(XML_ATTRIBUTE_ID, "");
       Name = element.SafeReadAttribute<string>(XML_ATTRIBUTE_NAME, "");
       Description = element.SafeReadAttribute<string>(XML_ATTRIBUTE_DESCRIPTION, "");
     }
 
-    public TXmlBase(IXmlBase xmlBase) {
+    public TObjectBase(IObjectBase xmlBase) {
+      Id = xmlBase.Id;
       Name = xmlBase.Name;
       Description = xmlBase.Description;
     }
@@ -50,6 +54,7 @@ namespace AskMeLib {
 
     public virtual XElement ToXml(string name) {
       XElement RetVal = new XElement(name);
+      RetVal.SetAttributeValue(XML_ATTRIBUTE_ID, Id);
       RetVal.SetAttributeValue(XML_ATTRIBUTE_NAME, Name);
       RetVal.SetAttributeValue(XML_ATTRIBUTE_DESCRIPTION, Description);
       return RetVal;
@@ -57,16 +62,29 @@ namespace AskMeLib {
 
     public virtual XElement ToXml(XName name) {
       XElement RetVal = new XElement(name);
+      RetVal.SetAttributeValue(XML_ATTRIBUTE_ID, Id);
       RetVal.SetAttributeValue(XML_ATTRIBUTE_NAME, Name);
       RetVal.SetAttributeValue(XML_ATTRIBUTE_DESCRIPTION, Description);
       return RetVal;
+    }
+
+    //public virtual JsonData ToJson(int subLevels = 0) {
+    //  return new JsonData(this);
+    //}
+
+    public virtual IJsonValue ToJson() {
+      JsonObject RetVal = new JsonObject(new JsonPair(XML_ATTRIBUTE_ID, Id));
+      RetVal.AddItem(new JsonPair(XML_ATTRIBUTE_NAME, Name));
+      RetVal.AddItem(new JsonPair(XML_ATTRIBUTE_DESCRIPTION, Description));
+      return RetVal;
+
     }
     #endregion --- Converters -------------------------------------------------------------------------------------
 
     #region --- Xml IO -----------------------------------------------------------------------------------------
     public virtual bool SaveXml(string storageLocation = "") {
       #region Validate parameters
-      if (!string.IsNullOrWhiteSpace(storageLocation)) {
+      if ( !string.IsNullOrWhiteSpace(storageLocation) ) {
         StorageLocation = storageLocation;
       }
       #endregion Validate parameters
@@ -79,7 +97,7 @@ namespace AskMeLib {
         XmlFile.Save(StorageLocation);
         NotifyProgress("Save successful");
         return true;
-      } catch (Exception ex) {
+      } catch ( Exception ex ) {
         NotifyError($"Unable to save information to file {StorageLocation} : {ex.Message}", ErrorLevel.Error);
         NotifyProgress("SaveXml failed");
         return false;
@@ -89,13 +107,13 @@ namespace AskMeLib {
     public virtual XElement LoadXml(string storageLocation = "") {
       string CurrentStorageLocation;
       #region Validate parameters
-      if (!string.IsNullOrWhiteSpace(storageLocation)) {
+      if ( !string.IsNullOrWhiteSpace(storageLocation) ) {
         CurrentStorageLocation = storageLocation;
       } else {
         CurrentStorageLocation = StorageLocation;
       }
 
-      if (!File.Exists(CurrentStorageLocation)) {
+      if ( !File.Exists(CurrentStorageLocation) ) {
         NotifyError($"Unable to read information from file {CurrentStorageLocation} : incorrect or missing filename", ErrorLevel.Error);
         return null;
       }
@@ -107,14 +125,14 @@ namespace AskMeLib {
 
         NotifyProgress("Parsing content...");
         XElement Root = XmlFile.Root;
-        if (Root == null) {
+        if ( Root == null ) {
           NotifyError("unable to read config file content");
           return null;
         }
 
         NotifyProgress("LoadXml Sucessfull");
         return Root;
-      } catch (Exception ex) {
+      } catch ( Exception ex ) {
         NotifyError($"Unable to read information from file {CurrentStorageLocation} : {ex.Message}", ErrorLevel.Error);
         NotifyProgress("LoadXml failed");
         return null;

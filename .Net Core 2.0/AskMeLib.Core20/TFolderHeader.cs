@@ -11,7 +11,7 @@ using System.Runtime.Serialization;
 
 namespace AskMeLib {
 
-  public partial class TFolderHeader : TXmlBase, IFolderHeader {
+  public partial class TFolderHeader : TObjectBase, IFolderHeader {
 
     #region --- XML constants ----------------------------------------------------------------------------------
     public const string XML_THIS_ELEMENT = "Header";

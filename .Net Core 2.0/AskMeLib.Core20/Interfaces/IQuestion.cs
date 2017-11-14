@@ -5,14 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace AskMeLib {
-  public interface IQuestion : IXmlBase {
+  public interface IQuestion : IObjectBase {
 
     string QuestionType { get; set; }
     IChoiceCollection Choices { get; set; }
     int CurrentChoice { get; set; }
 
-    string ToJSon();
-    bool Ask();
+    bool Render();
 
   }
 }

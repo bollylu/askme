@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace AskMeLib {
-  public interface IChoice : IXmlBase {
+  public interface IChoice : IObjectBase {
 
     bool IsCorrect { get; set; }
 

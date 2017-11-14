@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace AskMeLib {
-  public interface IQuestionFile : IXmlBase {
+  public interface IQuestionFile : IObjectBase {
 
     List<TQuestionCollection> Items { get; set; }
     IQuestionFileHeader Header { get; set; }

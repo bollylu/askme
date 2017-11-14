@@ -7,10 +7,12 @@ using BLTools;
 using System.Xml.Linq;
 using BLTools.Text;
 using System.Runtime.Serialization;
+using Newtonsoft.Json;
+using BLTools.Json;
 
 namespace AskMeLib {
 
-  public partial class TQuestion : TXmlBase, IQuestion {
+  public partial class TQuestion : TObjectBase, IQuestion {
 
     #region --- XML constants ----------------------------------------------------------------------------------
     public const string XML_THIS_ELEMENT = "Question";
@@ -18,7 +20,9 @@ namespace AskMeLib {
     #endregion --- XML constants -------------------------------------------------------------------------------
 
     #region --- Public properties ------------------------------------------------------------------------------
+
     public string QuestionType { get; set; }
+
     public IChoiceCollection Choices { get; set; } = new TChoiceCollection();
     public int CurrentChoice { get; set; } 
     #endregion --- Public properties ---------------------------------------------------------------------------
@@ -42,18 +46,19 @@ namespace AskMeLib {
     public TQuestion(XElement element) : base(element) {
       QuestionType = element.SafeReadAttribute<string>(XML_ATTRIBUTE_QUESTION_TYPE, "QCM1");
       Choices = new TChoiceCollection(element.SafeReadElement(TChoiceCollection.XML_THIS_ELEMENT));
-    } 
+    }
     #endregion --- Constructor(s) ------------------------------------------------------------------------------
 
-    public string ToJSon() {
-      StringBuilder RetVal = new StringBuilder("{");
-      RetVal.Append($"\"{XML_ATTRIBUTE_QUESTION_TYPE}\":\"{QuestionType}\"");
-      RetVal.Append($", \"{XML_ATTRIBUTE_NAME}\":\"{Name}\"");
-      RetVal.Append("}");
-      return RetVal.ToString();
+    public override IJsonValue ToJson() {
+      JsonObject RetVal = base.ToJson() as JsonObject;
+
+      RetVal.AddItem(new JsonPair(XML_ATTRIBUTE_QUESTION_TYPE, QuestionType));
+      RetVal.AddItem(new JsonPair(TChoiceCollection.XML_THIS_ELEMENT, Choices.ToJson()));
+
+      return RetVal;
     }
 
-    public bool Ask() {
+    public bool Render() {
       bool ReponseOk = false;
 
       // Display the question and get a valid answer

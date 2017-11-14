@@ -7,10 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BLTools" Version="4.0.0-CI-20171003-134244" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.3.0" />
-    <PackageReference Include="MSTest.TestAdapter" Version="1.1.18" />
-    <PackageReference Include="MSTest.TestFramework" Version="1.1.18" />
+    <Compile Remove="JsonStringTests.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BLTools" Version="4.0.0-CI-20171114-200602" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.5.0" />
+    <PackageReference Include="MSTest.TestAdapter" Version="1.2.0" />
+    <PackageReference Include="MSTest.TestFramework" Version="1.2.0" />
   </ItemGroup>
 
   <ItemGroup>

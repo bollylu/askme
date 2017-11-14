@@ -7,10 +7,13 @@ using Microsoft.AspNetCore.Mvc;
 using AskMeLib;
 using System.IO;
 using Microsoft.Extensions.Logging;
+using BLTools;
+using BLTools.Json;
+using Newtonsoft.Json;
 
 namespace AskMeWebApi.Controllers {
 
-  [Produces("application/json")]
+  //[Produces("application/json")]
   public class RepositoryController : Controller {
 
     private readonly ILogger<RepositoryController> _Log;
@@ -21,21 +24,33 @@ namespace AskMeWebApi.Controllers {
 
     [HttpGet]
     [Route("api/Repository/{name?}")]
-    public JsonResult Get(string name = "") {
+    public async Task<IActionResult> Get(string name = "") {
+      await Task.Yield();
       _Log.LogDebug("Getting Repository");
+
       if ( name == "" ) {
-        List<string> RetVal = new List<string>();
+
+        JsonArray RetVal = new JsonArray();
         foreach ( string RepositoryNameItem in Directory.GetFiles(TRepository.GlobalRepositoryRoot, "repository.xml", SearchOption.AllDirectories) ) {
-          RetVal.Add(Path.GetDirectoryName(RepositoryNameItem));
+          RetVal.AddItem(new JsonString(Path.GetDirectoryName(RepositoryNameItem)));
         }
-        return new JsonResult(RetVal);
+        //return new BLJsonActionResultBytes(RetVal.RenderAsString().Replace("\\", "\\\\"));
+        //return new BLJsonActionResultChars(RetVal.RenderAsString().Replace("\\","\\\\"));
+        return new BLJsonActionResultString(RetVal.RenderAsString());
+
       } else {
+
         using ( TRepository Repository = new TRepository(name) ) {
+
           if ( !Repository.Open() ) {
-            return new JsonResult(TRepository.Empty);
+            return NotFound(TRepository.Empty.ToJson().RenderAsString());
           }
-          return new JsonResult(Repository);
+
+          JsonObject RetVal = Repository.ToJson() as JsonObject;
+          return new BLJsonActionResultString(RetVal.RenderAsString());
+
         }
+
       }
 
     }
@@ -52,4 +67,8 @@ namespace AskMeWebApi.Controllers {
 
     }
   }
+
+  
+
+  
 }

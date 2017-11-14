@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using AskMeLib;
 using System.IO;
+using BLTools.Json;
 
 namespace AskMeWebApi.Controllers {
   [Produces("application/json")]
@@ -15,17 +16,17 @@ namespace AskMeWebApi.Controllers {
     [Route("api/Question/{repository}/{name}")]
     public JsonResult Get(string name = "") {
       if ( name == "" ) {
-        List<string> RetVal = new List<string>();
+        JsonArray RetVal = new JsonArray();
         foreach(string RepositoryNameItem in Directory.GetFiles(TRepository.GlobalRepositoryRoot, "repository.xml", SearchOption.AllDirectories)) {
-          RetVal.Add(Path.GetDirectoryName(RepositoryNameItem));
+          RetVal.AddItem(new JsonString(Path.GetDirectoryName(RepositoryNameItem)));
         }
-        return new JsonResult(RetVal);
+        return new JsonResult(RetVal.RenderAsString());
       } else {
         using ( TRepository Repository = new TRepository(name) ) {
           if ( !Repository.Open() ) {
-            return new JsonResult(TRepository.Empty);
+            return new JsonResult(TRepository.Empty.ToJson().RenderAsString());
           }
-          return new JsonResult(Repository.ToJson().Content);
+          return new JsonResult(Repository.ToJson().RenderAsString());
         }
       }
 

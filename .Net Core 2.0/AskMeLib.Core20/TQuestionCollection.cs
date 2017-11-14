@@ -9,10 +9,11 @@ using System.Xml.Linq;
 using System.IO;
 using System.Diagnostics;
 using System.Runtime.Serialization;
+using BLTools.Json;
 
 namespace AskMeLib {
 
-  public partial class TQuestionCollection : TXmlBase, IQuestionCollection {
+  public partial class TQuestionCollection : TObjectBase, IQuestionCollection {
 
     #region --- XML constants ----------------------------------------------------------------------------------
     public const string XML_THIS_ELEMENT = "Questions";
@@ -30,45 +31,40 @@ namespace AskMeLib {
     public TQuestionCollection(string name, string description, IEnumerable<IQuestion> questions) : base() {
       Name = name;
       Description = description;
-      foreach (IQuestion QuestionItem in questions) {
+      foreach ( IQuestion QuestionItem in questions ) {
         Items.Add(QuestionItem);
       }
     }
     public TQuestionCollection(XElement element) : base(element) {
-      if (element.Elements(TQuestion.XML_THIS_ELEMENT).Count() > 0) {
-        foreach (XElement QuestionItem in element.Elements(TQuestion.XML_THIS_ELEMENT)) {
+      if ( element.Elements(TQuestion.XML_THIS_ELEMENT).Count() > 0 ) {
+        foreach ( XElement QuestionItem in element.Elements(TQuestion.XML_THIS_ELEMENT) ) {
           Items.Add(new TQuestion(QuestionItem));
         }
       }
     }
 
     public TQuestionCollection(IQuestionCollection questionCollection) : base(questionCollection) {
-      foreach (IQuestion QuestionItem in questionCollection.Items) {
+      foreach ( IQuestion QuestionItem in questionCollection.Items ) {
         Items.Add(QuestionItem);
       }
       Counter = questionCollection.Counter;
     }
     #endregion --- Constructeurs ------------------------------------------------------------------
 
-    public string ToJSon() {
-      StringBuilder RetVal = new StringBuilder("{[");
-      foreach (IQuestion QuestionItem in Items) {
-        RetVal.Append(QuestionItem.ToJSon());
-        RetVal.Append(",");
-      }
-      RetVal.Truncate(1);
-      RetVal.Append("]}");
-      return RetVal.ToString();
-    }
+    //public override JsonObject ToJson() {
+    //  JsonObject RetVal = base.ToJson();
+    //  RetVal.AddItem(new JsonArray(Items.ForEach(x => x.ToJson())));
+    //  return RetVal;
+    //}
 
-    public void Ask() {
+    public void Render() {
       Counter = 0;
       Console.WriteLine($"Collection : {Name}");
       Console.WriteLine(Description);
       Console.WriteLine(new string('-', Description.Length));
 
-      foreach (IQuestion QuestionItem in Items) {
-        if (QuestionItem.Ask() == true) {
+      foreach ( IQuestion QuestionItem in Items ) {
+        if ( QuestionItem.Render() == true ) {
           Counter++;
           Console.WriteLine("La réponse est correcte !");
         } else {

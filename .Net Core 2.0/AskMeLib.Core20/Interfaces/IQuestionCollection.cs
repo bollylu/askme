@@ -5,12 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace AskMeLib {
-  public interface IQuestionCollection : IXmlBase {
+  public interface IQuestionCollection : IObjectBase {
 
     List<IQuestion> Items { get; set; }
     int Counter { get; set; }
 
-    void Ask();
+    void Render();
 
   }
 }

@@ -50,7 +50,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="BLTools, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\BLTools.4.0.0-CI-20171003-134244\lib\netstandard2.0\BLTools.dll</HintPath>
+      <HintPath>..\..\packages\BLTools.4.0.0-CI-20171114-200602\lib\netstandard2.0\BLTools.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

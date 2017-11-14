@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 using BLTools;
 using System.Xml.Linq;
 using System.Runtime.Serialization;
-
+using BLTools.Json;
 
 namespace AskMeLib {
 
-  public partial class TChoice : TXmlBase, IChoice {
+  public partial class TChoice : TObjectBase, IChoice {
 
     #region --- XML constants ----------------------------------------------------------------------------------
     public const string XML_THIS_ELEMENT = "Choice";
@@ -21,7 +21,7 @@ namespace AskMeLib {
     public bool IsCorrect { get; set; } = false;
     #endregion --- Public properties ---------------------------------------------------------------------------
 
-    #region --- XML constants ----------------------------------------------------------------------------------
+    #region --- Constructor(s) ---------------------------------------------------------------------------------
     public TChoice() : base() {
     }
     public TChoice(string title) : base() {
@@ -35,8 +35,15 @@ namespace AskMeLib {
 
     public TChoice(XElement element) : base(element) {
       IsCorrect = element.SafeReadAttribute<bool>(XML_ATTRIBUTE_IS_CORRECT, false);
-    } 
-    #endregion --- XML constants -------------------------------------------------------------------------------
+    }  
+    #endregion --- Constructor(s) ------------------------------------------------------------------------------
 
+    public override IJsonValue ToJson() {
+      JsonObject RetVal = base.ToJson() as JsonObject;
+
+      RetVal.AddItem(new JsonPair(XML_ATTRIBUTE_IS_CORRECT, IsCorrect));
+
+      return RetVal;
+    }
   }
 }

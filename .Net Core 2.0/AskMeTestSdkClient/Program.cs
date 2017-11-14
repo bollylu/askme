@@ -38,6 +38,12 @@ namespace AskMeTestSdkClient {
           if ( Repository != null ) {
             Console.WriteLine(Repository.ToString());
           }
+
+          Repository = await Server.GetRepository("ThirdRepository");
+          if ( Repository != null ) {
+            Console.WriteLine(Repository.ToString());
+          }
+
         }
       } catch { }
 

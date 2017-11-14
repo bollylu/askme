@@ -1,11 +1,14 @@
 ﻿using AskMeLib;
+using BLTools.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using BLTools;
 
 namespace AskMeSdkForCSharp {
   public class TRestApi : IDisposable {
@@ -33,39 +36,50 @@ namespace AskMeSdkForCSharp {
       return Response;
     }
 
-    public async Task<JsonString> DoJsonStringRequest(string request) {
-      return new JsonString(await DoStringRequest(request, JsonString.Empty));
+    public async Task<IJsonValue> DoJsonStringRequest(string request) {
+      string Response = await DoStringRequest(request, null);
+      return JsonValue.Parse(Response);
     }
-    public async Task<JsonString> DoJsonStringRequest(string request, JsonString body) {
-      return new JsonString(await DoStringRequest(request, body));
+    public async Task<IJsonValue> DoJsonStringRequest(string request, IJsonValue body) {
+      return JsonValue.Parse(await DoStringRequest(request, body));
     }
 
     public async Task<string> DoStringRequest(string request) {
-      return await DoStringRequest(request, JsonString.Empty);
+      return await DoStringRequest(request, null);
     }
-    public async Task<string> DoStringRequest(string request, JsonString body) {
+    public async Task<string> DoStringRequest(string request, IJsonValue body) {
       Trace.WriteLine($"Request : {request}");
-      HttpResponseMessage RequestResponse = await DoRequest(request, body.Content);
+      HttpResponseMessage RequestResponse;
+      if ( body == null ) {
+        RequestResponse = await DoRequest(request);
+      } else {
+        RequestResponse = await DoRequest(request, body.RenderAsString());
+      }
       LastStatusCode = RequestResponse.StatusCode;
       if ( !RequestResponse.IsSuccessStatusCode ) {
         string Error = $"Request failed : {RequestResponse.StatusCode} : {RequestResponse.ReasonPhrase}";
         Trace.WriteLine(Error);
         throw new ApplicationException(Error);
       }
-      return await RequestResponse.Content.ReadAsStringAsync();
+      HttpContent ResultContent = RequestResponse.Content;
+      byte[] Temp = await ResultContent.ReadAsByteArrayAsync();
+      string RetVal = Encoding.UTF8.GetString(Temp);
+
+      return RetVal;
+
     }
 
     public async Task<byte[]> DoBytesRequest(string request) {
       return await DoBytesRequest(request, null);
     }
 
-    public async Task<byte[]> DoBytesRequest(string request, JsonString body) {
+    public async Task<byte[]> DoBytesRequest(string request, IJsonValue body) {
       Console.WriteLine($"Request : {request}");
       HttpResponseMessage RequestResponse;
       if ( body == null ) {
         RequestResponse = await DoRequest(request);
       } else {
-        RequestResponse = await DoRequest(request, body.Content);
+        RequestResponse = await DoRequest(request, body.RenderAsString());
       }
       LastStatusCode = RequestResponse.StatusCode;
       if ( !RequestResponse.IsSuccessStatusCode ) {
