@@ -8,7 +8,6 @@ using AskMeLib;
 using BLTools;
 using BLTools.Debugging;
 using System.IO;
-using AskMeWebService;
 using System.Diagnostics;
 using BLTools.Text;
 
@@ -26,57 +25,67 @@ namespace AskMeTestConsole {
         Trace.Write(e.Message, Severity.GetSeverity((ErrorLevel)e.Result));
       };
 
-      if (Args.IsDefined("help") || Args.IsDefined("?")) {
+      if ( Args.IsDefined("help") || Args.IsDefined("?") ) {
         Usage();
       }
 
       Notifyer.NotifyProgress("Reading parameters...");
-      string RepositoryPath = Args.GetValue<string>("repository", @"I:\dev.git\AskMe\Repository Test");
+      string RepositoryPath = Args.GetValue<string>("repository", @"_Data");
       string Command = Args.GetValue<string>("command", "list");
       string DataFile = Args.GetValue<string>("file", "");
       string Category = Args.GetValue<string>("category", "");
       string Language = Args.GetValue<string>("language", "FR");
 
-      using (IRepository LocalRepository = new TRepository(RepositoryPath)) {
-        if (LocalRepository.Open()) {
+      TestLoadAndDisplayContent(RepositoryPath);
+
+      //TestLoadAndAskAll(Command, DataFile);
+
+      //TestLoadAndList(Command, RepositoryPath, Category, Language);
+
+    }
+
+    //private static void TestLoadAndList(string Command, string repositoryPath, string category, string language) {
+    //  if ( Command == "list" ) {
+    //    Notifyer.NotifyProgress("Command is LIST");
+    //    AskMeWebServiceClient Client = new AskMeWebServiceClient();
+
+    //    Console.WriteLine(Client.GetRepositoryList());
+
+    //    using ( TRepository Repository = new TRepository(repositoryPath) ) {
+    //      Console.WriteLine(Repository.GetContentList(category, language));
+    //    }
+    //    ConsoleExtension.Pause(10000);
+    //  }
+    //}
+
+    //private static void TestLoadAndAskAll(string Command, string DataFile) {
+    //  if ( Command == "load" ) {
+    //    Notifyer.NotifyProgress("Command is LOAD");
+    //    using ( AskMeWebServiceClient Client = new AskMeWebServiceClient() ) {
+    //      TQuestionFileWCF TempFile = Client.GetQuestionFile(DataFile);
+    //      IQuestionFile TestFile = new TQuestionFile(TempFile as IQuestionFile);
+    //      if ( TestFile == null ) {
+    //        Usage($"Data file is missing or access is denied : {DataFile}");
+    //      }
+    //      //TestFile.ReadData();
+    //      foreach ( TQuestionCollection QuestionsItem in TestFile.Items ) {
+    //        QuestionsItem.Ask();
+    //      }
+    //      ConsoleExtension.Pause(100);
+    //    }
+
+    //  }
+    //}
+
+    private static void TestLoadAndDisplayContent(string RepositoryPath) {
+      using ( IRepository LocalRepository = new TRepository(RepositoryPath) ) {
+        if ( LocalRepository.Open() ) {
           Console.WriteLine($"Repository : {LocalRepository.ToString()}");
           Console.WriteLine(TextBox.BuildFixedWidth("Content"));
           Console.WriteLine(LocalRepository.GetContentList());
           ConsoleExtension.Pause();
         }
       }
-
-
-
-      //if (Command == "load") {
-      //  Notifyer.NotifyProgress("Command is LOAD");
-      //  using (AskMeWebServiceClient Client = new AskMeWebServiceClient()) {
-      //    TQuestionFileWCF TempFile = Client.GetQuestionFile(DataFile);
-      //    IQuestionFile TestFile = new TQuestionFile(TempFile as IQuestionFile);
-      //    if (TestFile == null) {
-      //      Usage($"Data file is missing or access is denied : {DataFile}");
-      //    }
-      //    //TestFile.ReadData();
-      //    foreach (TQuestionCollection QuestionsItem in TestFile.Items) {
-      //      QuestionsItem.Ask();
-      //    }
-      //    ConsoleExtension.Pause(100);
-      //  }
-
-      //}
-
-      //if (Command == "list") {
-      //  Notifyer.NotifyProgress("Command is LIST");
-      //  AskMeWebServiceClient Client = new AskMeWebServiceClient();
-
-      //  Console.WriteLine(Client.GetRepositoryList());
-
-      //  //using (TRepository Repository = new TRepository(RepositoryPath)) {
-      //  //  Console.WriteLine(Repository.GetContentList(Category, Language));
-      //  //}
-      //  ConsoleExtension.Pause(10000);
-      //}
-
     }
 
     static void Usage(string message = "") {
